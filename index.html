@@ -10,12 +10,28 @@
 
     <link href="/dist/output.css" rel="stylesheet">
     <title>Les Petits Plats</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500&display=swap"
+        rel="stylesheet">
 </head>
 
-<body>
-    <header class="bg-amber-800 text-white">
-        <img src="./assets/logo/Logo.svg" alt="logo">
-        <h3>CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES </h3>
+<body class="max-w-screen-2xl mx-auto">
+    <header class="max-w-full ">
+        <img class="absolute z-[-1]" src="./assets/images/header.jpg" alt="plat">
+        <img class="w-52 pt-12 pl-12" src="./assets/logo/Logo.svg" alt="logo">
+        <div class="flex flex-col gap-y-48 relative">
+            <div class="flex flex-col gap-y-4 relative top-40">
+                <h3 class="text-primary font-anton text-center  text-4xl">CHERCHEZ PARMI PLUS DE 1500
+                    RECETTES</h3>
+                <h3 class="text-primary font-anton text-center  text-4xl">DU
+                    QUOTIDIEN,SIMPLES ET DÉLICIEUSES </h3>
+            </div>
+            <div class="mx-auto w-9/12 h-20">
+                <input type="text" placeholder="Rechercher"
+                    class="w-full h-full focus:outline-none focus:border-blue-400">
+                <button
+                    class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600">Rechercher</button>
+            </div>
+        </div>
     </header>
 
 </body>
