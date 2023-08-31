@@ -4,10 +4,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#FFD15B', // Ajoutez votre couleur primaire personnalisée
+        primary: "#FFD15B",
       },
+
       fontFamily: {
         anton: ["Anton", "sans-serif"],
+      },
+      backgroundImage: {
+        header: "url('./assets/images/header.jpg')",
       },
     },
   },

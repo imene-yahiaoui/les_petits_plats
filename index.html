@@ -8,16 +8,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
 
-    <link href="/dist/output.css" rel="stylesheet">
+
     <title>Les Petits Plats</title>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500&display=swap"
         rel="stylesheet">
+    <script src="https://kit.fontawesome.com/f266b52627.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="/dist/output.css" rel="stylesheet">
 </head>
 
-<body class="max-w-screen-2xl mx-auto">
-    <header class="max-w-full ">
-        <img class="absolute z-[-1]" src="./assets/images/header.jpg" alt="plat">
-        <img class="w-52 pt-12 pl-12" src="./assets/logo/Logo.svg" alt="logo">
+<body class="mx-auto max-w-screen-2xl">
+    <header class="w-full h-[667px] bg-[url('./assets/images/header.jpg')] bg-no-repeat bg-center bg-cover">
+
+        <!-- <img class="absolute z-[-1] max-w-full" src="./assets/images/header.jpg" alt="plat"> -->
+        <img class="w-52 pt-12 pl-12 m-0" src="./assets/logo/Logo.svg" alt="logo">
         <div class="flex flex-col gap-y-48 relative">
             <div class="flex flex-col gap-y-4 relative top-40">
                 <h3 class="text-primary font-anton text-center  text-4xl">CHERCHEZ PARMI PLUS DE 1500
@@ -25,11 +29,12 @@
                 <h3 class="text-primary font-anton text-center  text-4xl">DU
                     QUOTIDIEN,SIMPLES ET DÉLICIEUSES </h3>
             </div>
-            <div class="mx-auto w-9/12 h-20">
-                <input type="text" placeholder="Rechercher"
-                    class="w-full h-full focus:outline-none focus:border-blue-400">
-                <button
-                    class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600">Rechercher</button>
+            <div class="mx-auto w-9/12 h-20  ">
+                <input type="text" placeholder="Rechercher une recette, un ingrédient, ..."
+                    class="w-full h-full rounded-lg pl-12">
+                <button class="relative h-16 w-16 bg-black  right-[-1075px] bottom-[71px] rounded-lg"
+                    aria-label="search" type="submit"><i class="fa-solid fa-magnifying-glass text-3xl text-white  "></i>
+                </button>
             </div>
         </div>
     </header>
