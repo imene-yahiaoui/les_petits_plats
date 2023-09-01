@@ -29,16 +29,47 @@
                 <h3 class="text-primary font-anton text-center  text-4xl">DU
                     QUOTIDIEN,SIMPLES ET DÉLICIEUSES </h3>
             </div>
-            <div class="mx-auto w-9/12 h-20  ">
-                <input type="text" placeholder="Rechercher une recette, un ingrédient, ..."
+            <from class="mx-auto w-9/12 h-[73px]  ">
+                <input type="search" placeholder="Rechercher une recette, un ingrédient, ..."
                     class="w-full h-full rounded-lg pl-12">
-                <button class="relative h-16 w-16 bg-black  right-[-1075px] bottom-[71px] rounded-lg"
+                <button class="relative h-16 w-16 bg-black  right-[-1081px] bottom-[68px] rounded-lg"
                     aria-label="search" type="submit"><i class="fa-solid fa-magnifying-glass text-3xl text-white  "></i>
                 </button>
-            </div>
+            </from>
         </div>
     </header>
+    <section class="w-full">
 
+        <div class="h-20 w-60 bg-purple-700">
+
+
+            <input aria-label="checkbox" type="checkbox"
+                class=" h-20 w-60 peer    inset-x-0  opacity-0 z-10 cursor-pointer">
+
+            <h1 class="absolute top-[699px] left-[350px]">Ingrédients</h1>
+            <i
+                class="fa-solid fa-chevron-down absolute top-[699px]  left-[517px] transition-transform duration-500 rotate-0 peer-checked:rotate-180"></i>
+
+            <!--content-->
+            <div class="bg-black overflow-hidden transition-all duration-500 max-h-0 peer-checked:max-h-12">
+                <from>
+                    <input aria-label="input-Ingredients" type="search" id="ingredients">
+                </from>
+                <ul id="list_ingredient" >
+                    <p>test</p>
+                </ul>
+            </div>
+        </div>
+        </section>
+ <main id="cards" class="w-full h-96 bg-red-500 grid gap-4 grid-cols-3 " >
+ 
+
+ 
+
+ </main>
+
+    </section>
+    <script src="scripts/index.js"></script>
 </body>
 
 </html>
