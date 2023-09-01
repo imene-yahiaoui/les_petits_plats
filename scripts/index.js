@@ -9,8 +9,7 @@ const fetchData = async () => {
     });
     if (requete.ok) {
       const data = await requete.json();
-      console.log(data);
-      return data;
+           return data;
     }
   } catch (e) {
     console.log(e);
@@ -19,9 +18,11 @@ const fetchData = async () => {
 
 /**
  * @param[all data]
+ * @param[reverse dataArray]
  */
 async function processRecipes() {
     const dataArray = await fetchData();  
+    dataArray.reverse();
     dataArray.forEach((data) => {
       card(data); 
     });
