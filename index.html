@@ -17,10 +17,9 @@
     <link href="/dist/output.css" rel="stylesheet">
 </head>
 
-<body class="mx-auto max-w-screen-2xl">
+<body class="mx-auto max-w-screen-2xl font-Manrope">
     <header class="w-full h-[667px] bg-[url('./assets/images/header.jpg')] bg-no-repeat bg-center bg-cover">
 
-        <!-- <img class="absolute z-[-1] max-w-full" src="./assets/images/header.jpg" alt="plat"> -->
         <img class="w-52 pt-12 pl-12 m-0" src="./assets/logo/Logo.svg" alt="logo">
         <div class="flex flex-col gap-y-48 relative">
             <div class="flex flex-col gap-y-4 relative top-40">
@@ -38,35 +37,40 @@
             </from>
         </div>
     </header>
-    <section class="w-full">
 
-        <div class="h-20 w-60 bg-purple-700">
+    <main class="w-full  bg-gray-200">
+
+        <section class="w-full">
+
+            <div class="h-20 w-60 bg-purple-700">
 
 
-            <input aria-label="checkbox" type="checkbox"
-                class=" h-20 w-60 peer    inset-x-0  opacity-0 z-10 cursor-pointer">
+                <input aria-label="checkbox" type="checkbox"
+                    class=" h-20 w-60 peer    inset-x-0  opacity-0 z-10 cursor-pointer">
 
-            <h1 class="absolute top-[699px] left-[350px]">Ingrédients</h1>
-            <i
-                class="fa-solid fa-chevron-down absolute top-[699px]  left-[517px] transition-transform duration-500 rotate-0 peer-checked:rotate-180"></i>
+                <h1 class="absolute top-[699px] left-[350px]">Ingrédients</h1>
+                <i
+                    class="fa-solid fa-chevron-down absolute top-[699px]  left-[517px] transition-transform duration-500 rotate-0 peer-checked:rotate-180"></i>
 
-            <!--content-->
-            <div class="bg-black overflow-hidden transition-all duration-500 max-h-0 peer-checked:max-h-12">
-                <from>
-                    <input aria-label="input-Ingredients" type="search" id="ingredients">
-                </from>
-                <ul id="list_ingredient" >
-                    <p>test</p>
-                </ul>
+                <!--content-->
+                <div class="bg-black overflow-hidden transition-all duration-500 max-h-0 peer-checked:max-h-12">
+                    <from>
+                        <input aria-label="input-Ingredients" type="search" id="ingredients">
+                    </from>
+                    <ul id="list_ingredient">
+                        <p>test</p>
+                    </ul>
+                </div>
             </div>
-        </div>
         </section>
- <main id="cards" class="w-full  grid gap-14 grid-cols-3 " >
- 
 
- 
+        <div id="cards" class="w-11/12  grid gap-14 grid-cols-3 mx-auto mt-9">
 
- </main>
+
+        </div>
+
+
+    </main>
 
     </section>
     <script src="scripts/index.js"></script>
