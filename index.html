@@ -27,37 +27,37 @@
                 <h3 class="text-primary font-anton text-center  text-4xl">DU
                     QUOTIDIEN,SIMPLES ET DÉLICIEUSES </h3>
             </div>
-            <from class="mx-auto w-9/12 h-[73px]  ">
+            <from class="w-9/12 h-[73px] rounded-lg display: block relative mx-auto bg-white">
                 <input type="search" placeholder="Rechercher une recette, un ingrédient, ..."
-                    class="w-full h-full rounded-lg pl-12">
-                <button class="relative h-16 w-16 bg-black  right-[-1081px] bottom-[68px] rounded-lg"
-                    aria-label="search" type="submit"><i class="fa-solid fa-magnifying-glass text-3xl text-white  "></i>
+                    class="w-4/5 h-full focus:outline-none pl-12">
+                <button class="absolute w-[52px] h-[52px] top-[10px] right-2  bg-black   rounded-lg "
+                    aria-label="search" type="submit"><i class="fa-solid fa-magnifying-glass text-xl text-white  "></i>
                 </button>
             </from>
         </div>
     </header>
 
-    <main class="w-full  bg-gray-200">
+    <main class="w-full  bg-gray-200 ">
 
-        <section class="w-full">
-
-            <div class="h-20 w-60 bg-purple-700">
-
-
+        <section class="w-full relative">
+            <div class="h-14 w-48 bg-white mb-16 cursor-pointer max-h[324px] rounded-lg ">
                 <input aria-label="checkbox" type="checkbox"
-                    class=" h-20 w-60 peer    inset-x-0  opacity-0 z-10 cursor-pointer">
-
-                <h1 class="absolute top-[699px] left-[350px]">Ingrédients</h1>
+                    class=" h-20 w-60 peer    inset-x-0  opacity-0 z-10 cursor-pointer relative z-2">
+                <h1 class="absolute top-[16px] left-[19px] text-base font-medium font-Manrope">Ingrédients</h1>
                 <i
-                    class="fa-solid fa-chevron-down absolute top-[699px]  left-[517px] transition-transform duration-500 rotate-0 peer-checked:rotate-180"></i>
-
+                    class="fa-solid fa-chevron-down absolute top-[20px]  left-[150px] transition-transform duration-500 rotate-0 peer-checked:rotate-180"></i>
                 <!--content-->
-                <div class="bg-black overflow-hidden transition-all duration-500 max-h-0 peer-checked:max-h-12">
-                    <from>
-                        <input aria-label="input-Ingredients" type="search" id="ingredients">
+                <div
+                    class="bg-white w-48  overflow-hidden transition-all duration-500 max-h-0 peer-checked:max-h-[315px] z-10 absolute top-[47px] rounded-lg pt-[12px]">
+                    <from class="w-40  h-[37px] display: block relative border-solid border-2 border-gray-400 mx-auto">
+                        <input type="search" placeholder="" id="ingredient"
+                            class="w-4/5 h-full focus:outline-none  text-gray-400">
+                        <button class="  absolute top-[2px] right-2  " aria-label="search ingredient" type="submit"><i
+                                class="fa-solid fa-magnifying-glass text-sm text-gray-400  "></i>
+                        </button>
                     </from>
-                    <ul id="list_ingredient">
-                        <p>test</p>
+                    <ul id="list_ingredient" class=" pt-4 overflow-scroll">
+                    
                     </ul>
                 </div>
             </div>
