@@ -18,11 +18,14 @@ const fetchData = async () => {
 };
 
 /**
- * @return[all data]
+ * @return[data]
  * @return[reverse.dataArray]
+ *  @return[dataArrayLength]
  */
 async function processRecipes() {
   const dataArray = await fetchData();
+  const dataArrayLength = dataArray.length;
+  console.log(dataArrayLength);
   dataArray.reverse();
   dataArray.forEach((data) => {
     card(data);
@@ -32,24 +35,7 @@ async function processRecipes() {
 
 processRecipes();
 
-function displayIngredientsList(data) {
-  console.log(data.)
-  const { ingredients } = data;
-  /**
-   * ingredientsbtn
-   * @param[data ]
-   * * @return[ingredientChoix]
-   */
-  const ingredientsbtn = ingredients.map(
-    (ingr) => `
-<li
- class="text-sm font-Manrope font-normal hover:bg-yellow-500 mb-2 py-4 pl-[18px] text-transform: capitalize">
-${ingr.ingredient}
- </li>`
-  );
-  const ingredientChoix = document.getElementById("list_ingredient");
-  ingredientChoix.insertAdjacentHTML("beforeEnd", ingredientsbtn);
-}
+
 
 /**
  * ingredientsbtn
