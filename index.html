@@ -27,13 +27,15 @@
                 <h3 class="text-primary font-anton text-center  text-4xl">DU
                     QUOTIDIEN,SIMPLES ET DÉLICIEUSES </h3>
             </div>
-            <from class="w-9/12 h-[73px]  display: block relative mx-auto bg-white rounded-lg">
+
+            <form class="w-9/12 h-[73px]  display: block relative mx-auto bg-white rounded-lg">
                 <input type="search" placeholder="Rechercher une recette, un ingrédient, ..."
                     class="w-4/5 h-full focus:outline-none ml-12">
                 <button class="absolute w-[52px] h-[52px] top-[10px] right-2  bg-black   rounded-lg "
                     aria-label="search" type="submit"><i class="fa-solid fa-magnifying-glass text-xl text-white  "></i>
                 </button>
-            </from>
+            </form>
+
         </div>
     </header>
 
@@ -49,13 +51,16 @@
                 <!--content-->
                 <div
                     class="bg-white w-48  overflow-hidden transition-all duration-500 max-h-0 peer-checked:max-h-[315px] z-10 absolute top-[47px] rounded-lg pt-[12px]">
-                    <from class="w-40  h-[37px] display: block relative border-solid border-2 border-gray-400 mx-auto">
+
+                    <form class="w-40  h-[37px] display: block relative border-solid border-2 border-gray-400 mx-auto">
                         <input type="search" aria-label="input ingredient" id="ingredient"
-                            class="w-4/5 h-full focus:outline-none  text-gray-400">
-                        <button class="  absolute top-[2px] right-2  " aria-label="search ingredient" type="submit"><i
+                            class="w-4/5 h-full focus:outline-none  text-gray-400 text-transform: capitalize">
+                        <button id="searchIngredient" class="  absolute top-[2px] right-2  "
+                            aria-label="search ingredient" type="submit"><i
                                 class="fa-solid fa-magnifying-glass text-sm text-gray-400  "></i>
                         </button>
-                    </from>
+                    </form>
+
                     <ul id="list_ingredient" class=" pt-4 max-h-60 overflow-y-auto ">
 
                     </ul>
@@ -71,7 +76,7 @@
 
     </main>
 
-    </section>
+
     <script src="scripts/index.js"></script>
     <script src="scripts/ingredientsListProcessor.js"></script>
 </body>
