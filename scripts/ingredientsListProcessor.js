@@ -50,28 +50,28 @@ for (let i = 0; i < 50; i++) {
  * @param[input search ]
  * * @return[List Ingredients]
  */
+const displayedIngredients = new Set(); 
 
 valueIngredient.addEventListener("input", function () {
   const valeur = valueIngredient.value.toLowerCase();
-  if (valeur.length > 2) {
-    const ingredientList = document.querySelectorAll(".ListIngredientsBtn");
+  const ingredientList = document.querySelectorAll(".ListIngredientsBtn");
 
-    const uniqueIngredients = new Set();
+  for (const ingredientItem of ingredientList) {
+    const ingredientName = ingredientItem.value.toLowerCase();
+    const listItem = ingredientItem.parentElement;
 
-    for (const ingredientItem of ingredientList) {
-      const ingredientName = ingredientItem.value.toLowerCase();
-      uniqueIngredients.add(ingredientName);
-    }
-    console.log("unique", uniqueIngredients);
-    for (const ingredientItem of ingredientList) {
-      const ingredientName = ingredientItem.value.toLowerCase();
-      const listItem = ingredientItem.parentElement;
-
-      if (ingredientName.includes(valeur)) {
-        listItem.style.display = "block"; // Afficher l'élément si le nom correspond
+    if (valeur.length > 2) {
+      if (
+        ingredientName.includes(valeur) &&
+        !displayedIngredients.has(ingredientName)
+      ) {
+        listItem.style.display = "block";
+        displayedIngredients.add(ingredientName); // Ajoutez le nom à l'ensemble des noms affichés
       } else {
-        listItem.style.display = "none"; // Masquer l'élément si le nom ne correspond pas
+        listItem.style.display = "none"; // Masquer l'élément si le nom ne correspond pas 
       }
+    } else {
+      listItem.style.display = "block";
     }
   }
 });
