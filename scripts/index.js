@@ -1,3 +1,6 @@
+
+
+
 /**
  * @return[data]
  *
@@ -12,7 +15,6 @@ const fetchData = async () => {
       const data = await requete.json();
       console.log(data);
       return data;
-     
     }
   } catch (e) {
     console.log(e);
@@ -27,23 +29,24 @@ const fetchData = async () => {
 
 async function processRecipes() {
   const dataArray = await fetchData();
- 
+
   dataArray.reverse();
   dataArray.forEach((data) => {
     card(data);
     displayIngredientsList(data);
   });
+  numbreOfCard()
 }
 
 processRecipes();
 
-
-
 /**
  * ingredientsbtn
  * @param[data ]
- * * @return[cadres]
- */
+ * @return[cadres]
+ *@return[cader count]
+ **/
+let cadreCount = 0;
 function card(data) {
   const { name, description, quantity, unit, ingredients, image, time } = data;
   const picture = `./assets/images/${image}`;
@@ -98,6 +101,22 @@ function card(data) {
     `;
 
   document.getElementById("cards").insertAdjacentHTML("afterbegin", cadre);
+  cadreCount++; 
+
+
+
 }
+
+function numbreOfCard() {
+  const sectionFiltre = document.getElementById("sectionFiltre");
+
+  const recipenumbre=`
+  <p class="font-Anton  text-[21px] font-normal"> ${cadreCount}  recettes</p>
+  `
+  sectionFiltre.insertAdjacentHTML("beforeend", recipenumbre);
+  // Vous pouvez accéder à la valeur de cadreCount ici
+  console.log(`Valeur de cadreCount dans autreFonction : ${cadreCount}`);
+}
+
 
 fetchData();
