@@ -2,6 +2,7 @@
  * @return[data]
  *
  */
+
 const fetchData = async () => {
   try {
     const requete = await fetch("../public/recipes.json", {
@@ -11,6 +12,7 @@ const fetchData = async () => {
       const data = await requete.json();
       console.log(data);
       return data;
+     
     }
   } catch (e) {
     console.log(e);
@@ -22,10 +24,10 @@ const fetchData = async () => {
  * @return[reverse.dataArray]
  *  @return[dataArrayLength]
  */
+
 async function processRecipes() {
   const dataArray = await fetchData();
-  const dataArrayLength = dataArray.length;
-  console.log(dataArrayLength);
+ 
   dataArray.reverse();
   dataArray.forEach((data) => {
     card(data);
