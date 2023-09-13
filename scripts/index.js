@@ -109,12 +109,25 @@ function numbreOfCard() {
   const sectionFiltre = document.getElementById("sectionFiltre");
 
   const recipenumbre = `
-  <p class="font-Anton  text-[21px] font-normal"> ${cadreCount}  recettes</p>
+  <p class="font-Anton  text-[21px] font-normal" id="cardesNumber"> ${cadreCount}  recettes</p>
   `;
   sectionFiltre.insertAdjacentHTML("beforeend", recipenumbre);
 }
 
 fetchData();
+
+
+//metre a jour le numero de cardes 
+function updateNumberOfCards() {
+  const visibleCadres = document.querySelectorAll(".cadre[style='display: block;']");
+  const numberOfVisibleCadres = visibleCadres.length;
+  const sectionFiltre = document.getElementById("cardesNumber");
+
+  const recipenumbre = `
+    <p class="font-Anton text-[21px] font-normal">${numberOfVisibleCadres} recettes</p>
+  `;
+  sectionFiltre.innerHTML = recipenumbre;
+}
 
 // Récupère la valeur de recherche
 const searchValue = document.getElementById("searche");
@@ -122,11 +135,13 @@ const titlesCadre = document.querySelectorAll(".titlesCadre");
 const ingredientsCard = document.querySelectorAll(".ingredientsCard");
 const descriptionCadre = document.querySelectorAll(".descriptionCadre");
 
- 
+
+
 searchValue.addEventListener("input", function () {
+
   const valeurDeRecherche = searchValue.value.toLowerCase();
   console.log(valeurDeRecherche);
-
+  if(valeurDeRecherche.length >2){
   // Parcours les cadres de recette pour trouver correspondances
   const cadresRecettes = document.querySelectorAll(".cadre");
   cadresRecettes.forEach((cadre) => {
@@ -140,5 +155,10 @@ searchValue.addEventListener("input", function () {
     } else {
       cadre.style.display = "none"; // Masque le cadre de recette
     }
+ 
   });
+
+  updateNumberOfCards(); // Mettre à jour le nombre de cadres visibles
+}
 });
+
