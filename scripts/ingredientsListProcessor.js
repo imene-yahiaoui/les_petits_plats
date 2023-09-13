@@ -1,4 +1,4 @@
-const sectionFiltre = document.getElementById("sectionFiltre");
+const sectionOption = document.getElementById("sectionoption");
 const ingredientItems = document.querySelectorAll(".ListIngredientsBtn");
 
 //add html brn CreatIngredientFiltre
@@ -22,7 +22,7 @@ const CreatIngredientFiltre = `
   </div>
 </div>
 `;
-sectionFiltre.insertAdjacentHTML("afterbegin", CreatIngredientFiltre);
+sectionOption.insertAdjacentHTML("afterbegin", CreatIngredientFiltre);
 
 /**
  * @param[data ]
@@ -93,7 +93,7 @@ valueIngredient.addEventListener("input", function () {
   for (const ingredientItem of ingredientList) {
     const ingredientName = ingredientItem.value.toLowerCase();
     const listItem = ingredientItem.parentElement;
-
+console.log(valeur);
     if (valeur.length > 2) {
       if (
         ingredientName.includes(valeur) &&
