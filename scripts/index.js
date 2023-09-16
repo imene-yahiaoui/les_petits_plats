@@ -11,7 +11,7 @@ const fetchData = async () => {
     });
     if (requete.ok) {
       const data = await requete.json();
-      console.log(data);
+
       return data;
     }
   } catch (e) {
@@ -32,11 +32,8 @@ async function processRecipes() {
   dataArray.reverse();
   dataArray.forEach((data) => {
     card(data);
-    // displayIngredientsList(data);
   });
   numbreOfCard();
-
-  // Maintenant que dataArrayLength est défini, vous pouvez y accéder ici
 }
 processRecipes();
 
@@ -51,8 +48,6 @@ function card(data) {
   const { name, description, quantity, unit, ingredients, image, time, id } =
     data;
   const picture = `./assets/images/${image}`;
-
-  //
 
   // Créer une liste d'ingrédients en parcourant le tableau d'ingrédients
   const ingredientsList = ingredients
@@ -72,7 +67,7 @@ function card(data) {
     )
     .join("");
 
-  const maxLength = 180; // Le nombre maximal de caractères que vous souhaitez afficher
+  const maxLength = 180;
 
   // Tronquer la description si elle dépasse maxLength
   const truncatedDescription =
@@ -81,7 +76,7 @@ function card(data) {
       : description;
   //
   const cadre = `
-    <figure class="cadre  w-[380px] h-[731] bg-white rounded-3xl  " id="${id}">  
+    <figure class="cadre  w-[380px] h-[731] bg-white rounded-3xl  " id="${id}" style='display: block;'>  
     <div class="h-[253px] w-full rounded-3xl">
     <img  class="h-full w-full object-cover rounded-3xl rounded-b-lg" src="${picture}" alt="recette de ${name}">
     <p class="relative w-[80px] bg-yellow-500  text-center h-7 rounded-3xl 	top-[-232px]  left-[291px]"> ${time} min </p>
@@ -116,7 +111,7 @@ function numbreOfCard() {
 
 fetchData();
 
-//metre a jour le nulero de cardes
+//metre a jour le numero de cardes
 function updateNumberOfCards() {
   const visibleCadres = document.querySelectorAll(
     ".cadre[style='display: block;']"
@@ -138,22 +133,19 @@ const descriptionCadre = document.querySelectorAll(".descriptionCadre");
 
 searchValue.addEventListener("input", function () {
   const valeurDeRecherche = searchValue.value.toLowerCase();
-  console.log(valeurDeRecherche);
-  if (valeurDeRecherche.length > 2) {
-    // Parcours les cadres de recette pour trouver correspondances
-    const cadresRecettes = document.querySelectorAll(".cadre");
-    cadresRecettes.forEach((cadre) => {
-      const titre = cadre
-        .querySelector(".titlesCadre")
-        .textContent.toLowerCase();
-      const description = cadre
-        .querySelector(".descriptionCadre")
-        .textContent.toLowerCase();
-      const ingredients = cadre
-        .querySelector(".ingredientsCard")
-        .textContent.toLowerCase();
+  // Parcours les cadres de recette pour trouver correspondances
+  const cadresRecettes = document.querySelectorAll(".cadre");
+  cadresRecettes.forEach((cadre) => {
+    const titre = cadre.querySelector(".titlesCadre").textContent.toLowerCase();
+    const description = cadre
+      .querySelector(".descriptionCadre")
+      .textContent.toLowerCase();
+    const ingredients = cadre
+      .querySelector(".ingredientsCard")
+      .textContent.toLowerCase();
 
-      // Vérifie si la valeur de recherche est présente dans le titre, la description ou les ingrédients
+    // Vérifie si la valeur de recherche est présente dans le titre, la description ou les ingrédients
+    if (valeurDeRecherche.length > 2) {
       if (
         titre.includes(valeurDeRecherche) ||
         description.includes(valeurDeRecherche) ||
@@ -163,8 +155,31 @@ searchValue.addEventListener("input", function () {
       } else {
         cadre.style.display = "none"; // Masque le cadre de recette
       }
-    });
+    } else {
+      cadre.style.display = "block"; // Affiche le cadre de recette
+    }
+  });
+ // Mettre à jour la liste des ingrédients  
+ waitForIngredients().then((ingredientElements) => {
+  const uniqueIngredients = new Set();
+  ingredientElements.forEach((element) => {
+    uniqueIngredients.add(element.textContent);
+  });
+  // Créez une nouvelle liste sans doublons à partir de l'ensemble
+  const uniqueIngredientElements = Array.from(uniqueIngredients);
+  // Supprimez  tout les éléments  de la liste des ingrédients
+  const ingredientChoix = document.getElementById("list_ingredient");
+  ingredientChoix.innerHTML = "";
+  // Affichez la nouvelle liste sans doublons
+  uniqueIngredientElements.forEach((element) => {
+    const ListIngredients = ` <li
+    class="Ingredients  text-sm font-Manrope font-normal hover:bg-yellow-500 mb-2 py-4 pl-[18px] text-transform: capitalize" >
+      <button value="${element}" class="ListIngredientsBtn ">  ${element} </button>
+    </li>`;
+    ingredientChoix.insertAdjacentHTML("beforeEnd", ListIngredients);
+    console.log(element);
+  });
+});
+  updateNumberOfCards(); // Mettre à jour le nombre de cadres visibles
 
-    updateNumberOfCards(); // Mettre à jour le nombre de cadres visibles
-  }
 });
