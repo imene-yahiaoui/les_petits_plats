@@ -139,7 +139,7 @@ function initializeIngredientButtons() {
       console.log("Tags :", valueBtn);
 
       const tag = `<li
-      class="tagElement  text-sm font-Manrope font-normal bg-yellow-500 mb-2 py-4   text-transform: capitalize flex row px-4   rounded-md " >
+      class="tagElement  text-sm font-Manrope font-normal bg-yellow-500 mb-2 py-4   text-transform: capitalize flex row px-4   rounded-md mr-10" >
        <p class="pr-14">  ${valueBtn}  </p>
        <button class="font-bold closeTag"> <i class="fa-solid fa-x"></i> </button>
       </li>`;
