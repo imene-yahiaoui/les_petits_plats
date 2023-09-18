@@ -88,8 +88,9 @@ function updateIngedientsList() {
         <button value="${element}" class="ListIngredientsBtn ">  ${element} </button>
       </li>`;
       ingredientChoix.insertAdjacentHTML("beforeEnd", ListIngredients);
-      console.log(element);
+     
     });
+    initializeIngredientButtons();
   });
 }
 
@@ -128,8 +129,8 @@ valueIngredient.addEventListener("input", function () {
 
 });
 
- //param[]
- //return[ value]
+ //param[btn ]
+ //return[ value btn ingredient]
 
  function initializeIngredientButtons() {
   const ingredientList = document.querySelectorAll(".Ingredients");
@@ -137,7 +138,7 @@ valueIngredient.addEventListener("input", function () {
 
   ingredientList.forEach((button) => {
     const elementValue = button.textContent.trim();
-    console.log("Element text :", elementValue);
+   
 
     button.addEventListener("click", function () {
       const valueBtn = elementValue;
