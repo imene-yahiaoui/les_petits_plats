@@ -169,8 +169,37 @@ function closeTag(valueBtn) {
 
 //param[valueBtn ] la vaule de tage
 //return[ filtre caders]//faire la recherche avec des tags
-function searchWithTags(tagValues) {
+// function searchWithTags(tagValues) {
+//   const tagValue = tagValues.map((value) => value.toLowerCase());
 
+//   const cadresRecettes = document.querySelectorAll(".cadre");
+//   cadresRecettes.forEach((cadre) => {
+//     const titre = cadre.querySelector(".titlesCadre").textContent.toLowerCase();
+//     const description = cadre
+//       .querySelector(".descriptionCadre")
+//       .textContent.toLowerCase();
+//     const ingredients = cadre
+//       .querySelector(".ingredientsCard")
+//       .textContent.toLowerCase();
+//     if (tagValue.length > 0) {
+//       const tagsInRecipe = tagValue.some(
+//         (tag) =>
+//           titre.includes(tag) ||
+//           description.includes(tag) ||
+//           ingredients.includes(tag)
+//       );
+//       if (tagsInRecipe) {
+//         cadre.style.display = "block"; // Affiche le cadre de recette
+//       } else {
+//         cadre.style.display = "none"; // Masque le cadre de recette
+//       }
+//     } else {
+//       cadre.style.display = "block"; // Affiche le cadre de recette
+//     }
+//     updateIngedientsList();
+//   });
+// }
+function searchWithTags(tagValues) {
   const tagValue = tagValues.map((value) => value.toLowerCase());
 
   const cadresRecettes = document.querySelectorAll(".cadre");
@@ -182,21 +211,22 @@ function searchWithTags(tagValues) {
     const ingredients = cadre
       .querySelector(".ingredientsCard")
       .textContent.toLowerCase();
-      if(tagValue.length > 0){
-      
-      const tagsInRecipe = tagValue.some((tag) =>
+
+    // Vérifie que tout les tags present dans la recette 
+    const allTagsInRecipe = tagValue.every((tag) =>
       titre.includes(tag) || description.includes(tag) || ingredients.includes(tag)
     );
-    if (tagsInRecipe)
-      {
-      cadre.style.display = "block"; // Affiche le cadre de recette
-    } else {
-      cadre.style.display = "none"; // Masque le cadre de recette
-    }}
-    else{
-      cadre.style.display = "block"; // Affiche le cadre de recette
 
+    if (tagValue.length > 0) {
+      if (allTagsInRecipe) {
+        cadre.style.display = "block"; // Affiche le cadre de recette
+      } else {
+        cadre.style.display = "none"; // Masque le cadre de recette
+      }
+    } else {
+      cadre.style.display = "block"; // Affiche le cadre de recette si aucun tag n'est sélectionné
     }
-    updateIngedientsList()
+
+    updateIngedientsList();
   });
 }
