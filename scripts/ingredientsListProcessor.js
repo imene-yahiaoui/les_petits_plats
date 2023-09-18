@@ -5,7 +5,7 @@ const tagSection = document.getElementById("tags");
 //add html brn CreatIngredientFiltre
 
 const CreatIngredientFiltre = `
-<div class="h-14 w-48 bg-white mb-16 cursor-pointer max-h-[324px] rounded-lg">
+<div class="  h-14 w-48 bg-white mb-16 cursor-pointer max-h-[324px] rounded-lg m-0">
   <input aria-label="checkbox" type="checkbox"
          class="h-20 w-60 peer inset-x-0 opacity-0 z-10 cursor-pointer relative z-2">
   <h1 class="absolute top-[16px] left-[19px] text-base font-medium font-Manrope">Ingrédients</h1>
