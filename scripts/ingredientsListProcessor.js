@@ -144,21 +144,55 @@ function initializeIngredientButtons() {
        <button class="font-bold closeTag"> <i class="fa-solid fa-x"></i> </button>
       </li>`;
       tagSection.insertAdjacentHTML("beforeEnd", tag);
-      closeTag();
+      closeTag(valueBtn);
+      searchWithTags(valueBtn);
+      updateNumberOfCards();
     });
   });
 }
 
-function closeTag() {
+function closeTag(valueBtn) {
   const tagElements = document.querySelectorAll(".tagElement");
 
   tagElements.forEach((tagElement) => {
     const btnCloseTag = tagElement.querySelector(".closeTag");
 
     btnCloseTag.addEventListener("click", function () {
-      console.log("je supprime ");
-
       tagElement.style.display = "none";
+      searchWithTags("");
+      updateNumberOfCards();
     });
+  });
+}
+
+//param[valueBtn ] la vaule de tage
+//return[ filtre caders]
+function searchWithTags(valueBtn) {
+  const tagValue = valueBtn.toLowerCase();
+  const cadresRecettes = document.querySelectorAll(".cadre");
+  cadresRecettes.forEach((cadre) => {
+    const titre = cadre.querySelector(".titlesCadre").textContent.toLowerCase();
+    const description = cadre
+      .querySelector(".descriptionCadre")
+      .textContent.toLowerCase();
+    const ingredients = cadre
+      .querySelector(".ingredientsCard")
+      .textContent.toLowerCase();
+      if(tagValue){
+    if (
+
+      titre.includes(tagValue) ||
+      description.includes(tagValue) ||
+      ingredients.includes(tagValue)
+    ) {
+      cadre.style.display = "block"; // Affiche le cadre de recette
+    } else {
+      cadre.style.display = "none"; // Masque le cadre de recette
+    }}
+    else{
+      cadre.style.display = "block"; // Affiche le cadre de recette
+
+    }
+    
   });
 }

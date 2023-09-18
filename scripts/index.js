@@ -159,7 +159,8 @@ searchValue.addEventListener("input", function () {
       cadre.style.display = "block"; // Affiche le cadre de recette
     }
   });
-
-  updateIngedientsList(); // Mettre à jour la list des ingedients
+ 
+  updateIngedientsList()// Mettre à jour la list des ingedients 
   updateNumberOfCards(); // Mettre à jour le nombre de cadres visibles
+
 });
