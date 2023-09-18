@@ -125,18 +125,18 @@ valueIngredient.addEventListener("input", function () {
 });
 
 //param[btn ]
-//return[ value btn ingredient]
+//return[ value btn ingredient] //cree le tags
+let elementValues = [];
+// const tagList = document.getElementById("tagList");
 
 function initializeIngredientButtons() {
   const ingredientList = document.querySelectorAll(".Ingredients");
-  console.log("Nombre d'éléments .Ingredients :", ingredientList.length);
-
   ingredientList.forEach((button) => {
-    const elementValue = button.textContent.trim();
-
+    // elementValues.push(button.textContent.trim());
     button.addEventListener("click", function () {
-      const valueBtn = elementValue;
-      console.log("Tags :", valueBtn);
+      const valueBtn = button.textContent.trim();
+      elementValues.push(valueBtn);
+      console.log("Tags :", elementValues);
 
       const tag = `<li
       class="tagElement  text-sm font-Manrope font-normal bg-yellow-500 mb-2 py-4   text-transform: capitalize flex row px-4   rounded-md mr-10" >
@@ -145,7 +145,7 @@ function initializeIngredientButtons() {
       </li>`;
       tagSection.insertAdjacentHTML("beforeEnd", tag);
       closeTag(valueBtn);
-      searchWithTags(valueBtn);
+      searchWithTags(elementValues);
       updateNumberOfCards();
     });
   });
@@ -159,16 +159,20 @@ function closeTag(valueBtn) {
 
     btnCloseTag.addEventListener("click", function () {
       tagElement.style.display = "none";
-      searchWithTags("");
+      // Retirez la valeur du tag du tableau elementValues
+      elementValues = elementValues.filter((value) => value !== valueBtn);
+      searchWithTags(elementValues);
       updateNumberOfCards();
     });
   });
 }
 
 //param[valueBtn ] la vaule de tage
-//return[ filtre caders]
-function searchWithTags(valueBtn) {
-  const tagValue = valueBtn.toLowerCase();
+//return[ filtre caders]//faire la recherche avec des tags
+function searchWithTags(tagValues) {
+
+  const tagValue = tagValues.map((value) => value.toLowerCase());
+
   const cadresRecettes = document.querySelectorAll(".cadre");
   cadresRecettes.forEach((cadre) => {
     const titre = cadre.querySelector(".titlesCadre").textContent.toLowerCase();
@@ -178,13 +182,13 @@ function searchWithTags(valueBtn) {
     const ingredients = cadre
       .querySelector(".ingredientsCard")
       .textContent.toLowerCase();
-      if(tagValue){
-    if (
-
-      titre.includes(tagValue) ||
-      description.includes(tagValue) ||
-      ingredients.includes(tagValue)
-    ) {
+      if(tagValue.length > 0){
+      
+      const tagsInRecipe = tagValue.some((tag) =>
+      titre.includes(tag) || description.includes(tag) || ingredients.includes(tag)
+    );
+    if (tagsInRecipe)
+      {
       cadre.style.display = "block"; // Affiche le cadre de recette
     } else {
       cadre.style.display = "none"; // Masque le cadre de recette
@@ -193,6 +197,6 @@ function searchWithTags(valueBtn) {
       cadre.style.display = "block"; // Affiche le cadre de recette
 
     }
-    
+    updateIngedientsList()
   });
 }
