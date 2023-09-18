@@ -132,7 +132,6 @@ let elementValues = [];
 function initializeIngredientButtons() {
   const ingredientList = document.querySelectorAll(".Ingredients");
   ingredientList.forEach((button) => {
-    // elementValues.push(button.textContent.trim());
     button.addEventListener("click", function () {
       const valueBtn = button.textContent.trim();
       elementValues.push(valueBtn);
@@ -161,47 +160,19 @@ function closeTag(valueBtn) {
       tagElement.style.display = "none";
       // Retirez la valeur du tag du tableau elementValues
       elementValues = elementValues.filter((value) => value !== valueBtn);
-      searchWithTags(elementValues);
+      // Vérifie s'il ne reste plus aucun tag, puis affiche toutes les recettes
+      if (elementValues.length === 0) {
+        searchWithTags([]);
+      } else {
+        searchWithTags(elementValues);
+      }
       updateNumberOfCards();
     });
   });
 }
 
-//param[valueBtn ] la vaule de tage
-//return[ filtre caders]//faire la recherche avec des tags
-// function searchWithTags(tagValues) {
-//   const tagValue = tagValues.map((value) => value.toLowerCase());
-
-//   const cadresRecettes = document.querySelectorAll(".cadre");
-//   cadresRecettes.forEach((cadre) => {
-//     const titre = cadre.querySelector(".titlesCadre").textContent.toLowerCase();
-//     const description = cadre
-//       .querySelector(".descriptionCadre")
-//       .textContent.toLowerCase();
-//     const ingredients = cadre
-//       .querySelector(".ingredientsCard")
-//       .textContent.toLowerCase();
-//     if (tagValue.length > 0) {
-//       const tagsInRecipe = tagValue.some(
-//         (tag) =>
-//           titre.includes(tag) ||
-//           description.includes(tag) ||
-//           ingredients.includes(tag)
-//       );
-//       if (tagsInRecipe) {
-//         cadre.style.display = "block"; // Affiche le cadre de recette
-//       } else {
-//         cadre.style.display = "none"; // Masque le cadre de recette
-//       }
-//     } else {
-//       cadre.style.display = "block"; // Affiche le cadre de recette
-//     }
-//     updateIngedientsList();
-//   });
-// }
 function searchWithTags(tagValues) {
   const tagValue = tagValues.map((value) => value.toLowerCase());
-
   const cadresRecettes = document.querySelectorAll(".cadre");
   cadresRecettes.forEach((cadre) => {
     const titre = cadre.querySelector(".titlesCadre").textContent.toLowerCase();
@@ -212,11 +183,15 @@ function searchWithTags(tagValues) {
       .querySelector(".ingredientsCard")
       .textContent.toLowerCase();
 
-    // Vérifie que tout les tags present dans la recette 
-    const allTagsInRecipe = tagValue.every((tag) =>
-      titre.includes(tag) || description.includes(tag) || ingredients.includes(tag)
+    // Vérifie que tout les tags présents dans la recette
+    const allTagsInRecipe = tagValue.every(
+      (tag) =>
+        titre.includes(tag) ||
+        description.includes(tag) ||
+        ingredients.includes(tag)
     );
 
+    // Vérifie s'il y a des tags sélectionnés pour filtrer
     if (tagValue.length > 0) {
       if (allTagsInRecipe) {
         cadre.style.display = "block"; // Affiche le cadre de recette
@@ -224,7 +199,13 @@ function searchWithTags(tagValues) {
         cadre.style.display = "none"; // Masque le cadre de recette
       }
     } else {
-      cadre.style.display = "block"; // Affiche le cadre de recette si aucun tag n'est sélectionné
+      // Ne réinitialise pas la recherche si un des tags est deja la
+      const previousDisplay = cadre.style.display;
+      if (previousDisplay === "none") {
+        cadre.style.display = "none";
+      } else {
+        cadre.style.display = "block";
+      }
     }
 
     updateIngedientsList();
