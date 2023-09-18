@@ -1,6 +1,6 @@
 const sectionOption = document.getElementById("sectionoption");
 const ingredientItems = document.querySelectorAll(".ListIngredientsBtn");
-// const visibleCadres = document.querySelectorAll(".cadre[style='display: block;']");
+const tagSection = document.getElementById("tags");
 
 //add html brn CreatIngredientFiltre
 
@@ -65,7 +65,6 @@ waitForIngredients().then((ingredientElements) => {
     const ingredientChoix = document.getElementById("list_ingredient");
     ingredientChoix.insertAdjacentHTML("beforeEnd", ListIngredients);
     // console.log(element);
-
   });
   initializeIngredientButtons();
 });
@@ -88,13 +87,10 @@ function updateIngedientsList() {
         <button value="${element}" class="ListIngredientsBtn ">  ${element} </button>
       </li>`;
       ingredientChoix.insertAdjacentHTML("beforeEnd", ListIngredients);
-     
     });
     initializeIngredientButtons();
   });
 }
-
- 
 
 ////serache
 //*****jai un probleme ici "quand jecrit tout le mot il se suprime " */
@@ -107,7 +103,7 @@ const displayedIngredients = new Set();
 
 valueIngredient.addEventListener("input", function () {
   const valeur = valueIngredient.value.toLowerCase();
-  const ingredientList = document.querySelectorAll(".Ingredients");
+  // const ingredientList = document.querySelectorAll(".Ingredients");
 
   ingredientList.forEach((ingredientItem) => {
     const ingredientName = ingredientItem.textContent.toLowerCase();
@@ -126,23 +122,43 @@ valueIngredient.addEventListener("input", function () {
       ingredientItem.style.display = "block";
     }
   });
-
 });
 
- //param[btn ]
- //return[ value btn ingredient]
+//param[btn ]
+//return[ value btn ingredient]
 
- function initializeIngredientButtons() {
+function initializeIngredientButtons() {
   const ingredientList = document.querySelectorAll(".Ingredients");
   console.log("Nombre d'éléments .Ingredients :", ingredientList.length);
 
   ingredientList.forEach((button) => {
     const elementValue = button.textContent.trim();
-   
 
     button.addEventListener("click", function () {
       const valueBtn = elementValue;
       console.log("Tags :", valueBtn);
+
+      const tag = `<li
+      class="tagElement  text-sm font-Manrope font-normal bg-yellow-500 mb-2 py-4   text-transform: capitalize flex row px-4   rounded-md " >
+       <p class="pr-14">  ${valueBtn}  </p>
+       <button class="font-bold closeTag"> <i class="fa-solid fa-x"></i> </button>
+      </li>`;
+      tagSection.insertAdjacentHTML("beforeEnd", tag);
+      closeTag();
+    });
+  });
+}
+
+function closeTag() {
+  const tagElements = document.querySelectorAll(".tagElement");
+
+  tagElements.forEach((tagElement) => {
+    const btnCloseTag = tagElement.querySelector(".closeTag");
+
+    btnCloseTag.addEventListener("click", function () {
+      console.log("je supprime ");
+
+      tagElement.style.display = "none";
     });
   });
 }
