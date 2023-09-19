@@ -69,29 +69,6 @@ waitForIngredients().then((ingredientElements) => {
   initializeIngredientButtons();
 });
 
-function updateIngedientsList() {
-  waitForIngredients().then((ingredientElements) => {
-    const uniqueIngredients = new Set();
-    ingredientElements.forEach((element) => {
-      uniqueIngredients.add(element.textContent);
-    });
-    // Créez une nouvelle liste sans doublons à partir de l'ensemble
-    const uniqueIngredientElements = Array.from(uniqueIngredients);
-    // Supprimez  tout les éléments  de la liste des ingrédients
-    const ingredientChoix = document.getElementById("list_ingredient");
-    ingredientChoix.innerHTML = "";
-    // Affichez la nouvelle liste sans doublons
-    uniqueIngredientElements.forEach((element) => {
-      const ListIngredients = ` <li
-      class="Ingredients  text-sm font-Manrope font-normal hover:bg-yellow-500 mb-2 py-4 pl-[18px] text-transform: capitalize" >
-        <button value="${element}" class="ListIngredientsBtn ">  ${element} </button>
-      </li>`;
-      ingredientChoix.insertAdjacentHTML("beforeEnd", ListIngredients);
-    });
-    initializeIngredientButtons();
-  });
-}
-
 ////serache
 //*****jai un probleme ici "quand jecrit tout le mot il se suprime " */
 /**
@@ -127,8 +104,6 @@ valueIngredient.addEventListener("input", function () {
 //param[btn ]
 //return[ value btn ingredient] //cree le tags
 let elementValues = [];
-// const tagList = document.getElementById("tagList");
-
 function initializeIngredientButtons() {
   const ingredientList = document.querySelectorAll(".Ingredients");
   ingredientList.forEach((button) => {
@@ -136,30 +111,44 @@ function initializeIngredientButtons() {
       const valueBtn = button.textContent.trim();
       elementValues.push(valueBtn);
       console.log("Tags :", elementValues);
+      console.log("TagsLength :", elementValues.length);
 
       const tag = `<li
       class="tagElement  text-sm font-Manrope font-normal bg-yellow-500 mb-2 py-4   text-transform: capitalize flex row px-4   rounded-md mr-10" >
        <p class="pr-14">  ${valueBtn}  </p>
-       <button class="font-bold closeTag"> <i class="fa-solid fa-x"></i> </button>
+       <button class="font-bold closeTag" data-tag-value="${valueBtn}"> <i class="fa-solid fa-x"></i> </button>
       </li>`;
       tagSection.insertAdjacentHTML("beforeEnd", tag);
-      closeTag(valueBtn);
+
       searchWithTags(elementValues);
+      closeTag(valueBtn);
       updateNumberOfCards();
     });
   });
 }
 
-function closeTag(valueBtn) {
+
+/**
+ * return[close tag]
+ */
+function closeTag() {
   const tagElements = document.querySelectorAll(".tagElement");
 
   tagElements.forEach((tagElement) => {
     const btnCloseTag = tagElement.querySelector(".closeTag");
+    const tagValueToRemove = btnCloseTag.getAttribute("data-tag-value");
 
     btnCloseTag.addEventListener("click", function () {
-      tagElement.style.display = "none";
+      console.log("Tag to remove:", tagValueToRemove);
+      tagElement.remove();
+
       // Retirez la valeur du tag du tableau elementValues
-      elementValues = elementValues.filter((value) => value !== valueBtn);
+      elementValues = elementValues.filter(
+        (value) => value !== tagValueToRemove
+      );
+
+      updateIngedientsList();
+
       // Vérifie s'il ne reste plus aucun tag, puis affiche toutes les recettes
       if (elementValues.length === 0) {
         searchWithTags([]);
@@ -171,9 +160,16 @@ function closeTag(valueBtn) {
   });
 }
 
+/**
+ * @return[ searche whith tags]
+ */
 function searchWithTags(tagValues) {
   const tagValue = tagValues.map((value) => value.toLowerCase());
   const cadresRecettes = document.querySelectorAll(".cadre");
+  // Vérifie si tous les tags ont été supprimés
+  console.log("tagValue.length 1 ", tagValue.length);
+  const allTagsRemoved = tagValue.length < 0;
+
   cadresRecettes.forEach((cadre) => {
     const titre = cadre.querySelector(".titlesCadre").textContent.toLowerCase();
     const description = cadre
@@ -190,24 +186,43 @@ function searchWithTags(tagValues) {
         description.includes(tag) ||
         ingredients.includes(tag)
     );
+    console.log("tagValue.length ", tagValue.length);
 
-    // Vérifie s'il y a des tags sélectionnés pour filtrer
-    if (tagValue.length > 0) {
-      if (allTagsInRecipe) {
-        cadre.style.display = "block"; // Affiche le cadre de recette
-      } else {
-        cadre.style.display = "none"; // Masque le cadre de recette
-      }
+    if (allTagsRemoved || allTagsInRecipe) {
+      cadre.style.display = "block"; // Affiche le cadre de recette
     } else {
-      // Ne réinitialise pas la recherche si un des tags est deja la
-      const previousDisplay = cadre.style.display;
-      if (previousDisplay === "none") {
-        cadre.style.display = "none";
-      } else {
-        cadre.style.display = "block";
-      }
+      cadre.style.display = "none"; // Masque le cadre de recette
     }
+  });
 
+  // Si aucun tag n'a été supprimé, conserve l'état précédent de l'affichage
+  if (!allTagsRemoved) {
     updateIngedientsList();
+  }
+}
+
+/**
+ * @return[Ingedients List]
+ */
+function updateIngedientsList() {
+  waitForIngredients().then((ingredientElements) => {
+    const uniqueIngredients = new Set();
+    ingredientElements.forEach((element) => {
+      uniqueIngredients.add(element.textContent);
+    });
+    // Créez une nouvelle liste sans doublons à partir de l'ensemble
+    const uniqueIngredientElements = Array.from(uniqueIngredients);
+    // Supprimez  tout les éléments  de la liste des ingrédients
+    const ingredientChoix = document.getElementById("list_ingredient");
+    ingredientChoix.innerHTML = "";
+    // Affichez la nouvelle liste sans doublons
+    uniqueIngredientElements.forEach((element) => {
+      const ListIngredients = ` <li
+      class="Ingredients  text-sm font-Manrope font-normal hover:bg-yellow-500 mb-2 py-4 pl-[18px] text-transform: capitalize" >
+        <button value="${element}" class="ListIngredientsBtn ">  ${element} </button>
+      </li>`;
+      ingredientChoix.insertAdjacentHTML("beforeEnd", ListIngredients);
+    });
+    initializeIngredientButtons();
   });
 }
