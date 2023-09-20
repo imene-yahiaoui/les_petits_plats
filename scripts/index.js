@@ -133,6 +133,7 @@ const descriptionCadre = document.querySelectorAll(".descriptionCadre");
 
 searchValue.addEventListener("input", function () {
   const valeurDeRecherche = searchValue.value.toLowerCase();
+
   // Parcours les cadres de recette pour trouver correspondances
   const cadresRecettes = document.querySelectorAll(".cadre");
   cadresRecettes.forEach((cadre) => {
@@ -146,6 +147,8 @@ searchValue.addEventListener("input", function () {
 
     // Vérifie si la valeur de recherche est présente dans le titre, la description ou les ingrédients
     if (valeurDeRecherche.length > 2) {
+      // Stocker la valeur de recherche dans le localStorage
+      localStorage.setItem("searchValue", valeurDeRecherche);
       if (
         titre.includes(valeurDeRecherche) ||
         description.includes(valeurDeRecherche) ||
@@ -159,8 +162,13 @@ searchValue.addEventListener("input", function () {
       cadre.style.display = "block"; // Affiche le cadre de recette
     }
   });
- 
-  updateIngedientsList()// Mettre à jour la list des ingedients 
-  updateNumberOfCards(); // Mettre à jour le nombre de cadres visibles
 
+  updateIngedientsList(); // Mettre à jour la list des ingedients
+  updateNumberOfCards(); // Mettre à jour le nombre de cadres visibles
+});
+
+const BtnSearche = document.getElementById("searcheBtn");
+
+BtnSearche.addEventListener("click", (e) => {
+  e.preventDefault();
 });

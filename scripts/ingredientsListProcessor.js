@@ -13,7 +13,7 @@ const CreatIngredientFiltre = `
 
   <div class="bg-white w-48  overflow-hidden transition-all duration-500 max-h-0 peer-checked:max-h-[315px] z-10 absolute top-[47px] rounded-lg pt-[12px]">
     <form class="w-40 h-[37px] display:block relative border-solid border-2 border-gray-400 mx-auto">
-      <input type="search" aria-label="input ingredient" id="ingredientSearch" class="w-4/5 h-full focus:outline-none text-gray-400 text-transform:capitalize">
+      <input type="search" aria-label="input ingredient" id="ingredientSearch" class=" capitalize  w-4/5 h-full focus:outline-none text-gray-400 ">
       <button id="searchIngredient" class="absolute top-[2px] right-2" aria-label="search ingredient" type="submit">
         <i class="fa-solid fa-magnifying-glass text-sm text-gray-400"></i>
       </button>
@@ -58,40 +58,42 @@ waitForIngredients().then((ingredientElements) => {
   const uniqueIngredientElements = Array.from(uniqueIngredients);
   // Affichez la nouvelle liste sans doublons
   uniqueIngredientElements.forEach((element) => {
+    
     const ListIngredients = ` <li
-  class="Ingredients  text-sm font-Manrope font-normal hover:bg-yellow-500 mb-2 py-4 pl-[18px] text-transform: capitalize" >
+  class="capitalize Ingredients  text-sm font-Manrope font-normal hover:bg-yellow-500 mb-2 py-4 pl-[18px] " >
     <button class="ListIngredientsBtn ">  ${element} </button>
   </li>`;
     const ingredientChoix = document.getElementById("list_ingredient");
     ingredientChoix.insertAdjacentHTML("beforeEnd", ListIngredients);
-    // console.log(element);
+   console.log(element);
   });
   initializeIngredientButtons();
 });
 
-////serache
-//*****jai un probleme ici "quand jecrit tout le mot il se suprime " */
+
 /**
  * @param[input search ]
  * * @return[List Ingredients]
  */
 const valueIngredient = document.getElementById("ingredientSearch");
-const displayedIngredients = new Set();
+// const displayedIngredients = new Set();
 
 valueIngredient.addEventListener("input", function () {
   const valeur = valueIngredient.value.toLowerCase();
-  // const ingredientList = document.querySelectorAll(".Ingredients");
-
+  // Parcours les ingredients   pour trouver correspondances
+  const ingredientList = document.querySelectorAll(".Ingredients");
   ingredientList.forEach((ingredientItem) => {
     const ingredientName = ingredientItem.textContent.toLowerCase();
 
-    if (valeur.length > 2) {
+    if (valeur.length === 0) {
+      ingredientItem.style.display = "block";
+    } else if (valeur.length > 2) {
       if (
-        ingredientName.includes(valeur) &&
-        !displayedIngredients.has(ingredientName)
+        ingredientName.includes(valeur)
+        // !displayedIngredients.has(ingredientName)
       ) {
         ingredientItem.style.display = "block";
-        displayedIngredients.add(ingredientName); // Ajoutez le nom à l'ensemble des noms affichés
+        // displayedIngredients.add(ingredientName); // Ajoutez le nom à l'ensemble des noms affichés
       } else {
         ingredientItem.style.display = "none"; // Masquer l'élément si le nom ne correspond pas
       }
@@ -126,7 +128,6 @@ function initializeIngredientButtons() {
     });
   });
 }
-
 
 /**
  * return[close tag]
@@ -163,13 +164,20 @@ function closeTag() {
 /**
  * @return[ searche whith tags]
  */
+//if input est la 
+
+// const searchValue = document.getElementById("searche");
+// const valeurDeRecherche = searchValue.value.toLowerCase();
+
+
 function searchWithTags(tagValues) {
+   
   const tagValue = tagValues.map((value) => value.toLowerCase());
   const cadresRecettes = document.querySelectorAll(".cadre");
   // Vérifie si tous les tags ont été supprimés
   console.log("tagValue.length 1 ", tagValue.length);
   const allTagsRemoved = tagValue.length < 0;
-
+ 
   cadresRecettes.forEach((cadre) => {
     const titre = cadre.querySelector(".titlesCadre").textContent.toLowerCase();
     const description = cadre
