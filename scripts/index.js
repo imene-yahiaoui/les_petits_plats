@@ -160,7 +160,9 @@ searchValue.addEventListener("input", function () {
       }
     } else {
       cadre.style.display = "block"; // Affiche le cadre de recette
+      localStorage.removeItem("searchValue", valeurDeRecherche);
     }
+   
   });
 
   updateIngedientsList(); // Mettre à jour la list des ingedients
@@ -171,4 +173,11 @@ const BtnSearche = document.getElementById("searcheBtn");
 
 BtnSearche.addEventListener("click", (e) => {
   e.preventDefault();
+});
+
+// Supprimer les données du localStorage avant le rafraîchissement de la page
+window.addEventListener("beforeunload", () => {
+  const valeurDeRecherche = searchValue.value.toLowerCase();
+  localStorage.removeItem("searchValue", valeurDeRecherche);
+
 });
