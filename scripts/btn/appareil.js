@@ -13,8 +13,57 @@ const CreatAppareilFiltre = `
       </button>
     </form>
 
-    <ul id="list_Apparei" class="pt-4 max-h-60 overflow-y-auto"></ul>
+    <ul id="list_Appareil" class="pt-4 max-h-60 overflow-y-auto"></ul>
   </div>
 </div>
 `;
 sectionOption.insertAdjacentHTML("beforeend", CreatAppareilFiltre);
+
+/**
+ * recuper la list des Appareil
+ */
+
+function waitForAppareil() {
+  return new Promise((resolve) => {
+    const checkAppareil = () => {
+      const visibleCadres = document.querySelectorAll(
+        ".cadre[style='display: block;']"
+      );
+      const AppareilElements = [];
+
+      visibleCadres.forEach((cadre) => {
+        const AppareilInCadre = cadre.querySelectorAll(".appareil");
+        AppareilElements.push(...AppareilInCadre);
+      });
+
+      if (AppareilElements.length > 0) {
+        resolve(AppareilElements);
+      } else {
+        setTimeout(checkAppareil, 100); // Réessaie dans 100 ms
+      }
+    };
+
+    checkAppareil();
+  });
+}
+
+waitForAppareil().then((AppareilElements) => {
+  const uniqueAppareil = new Set();
+  AppareilElements.forEach((element) => {
+    uniqueAppareil.add(element.textContent);
+  });
+  // Créez une nouvelle liste sans doublons à partir de l'ensemble
+  const uniqueAppareilElements = Array.from(uniqueAppareil);
+  // Affichez la nouvelle liste sans doublons
+  uniqueAppareilElements.forEach((element) => {
+    const ListAppareil = ` <li
+    class="capitalize Ingredients  text-sm font-Manrope font-normal hover:bg-yellow-500 mb-2 py-4 pl-[18px] " >
+      <button class="ListIngredientsBtn ">  ${element} </button>
+    </li>`;
+    const AppareilChoix = document.getElementById("list_Appareil");
+    AppareilChoix.insertAdjacentHTML("beforeEnd", ListAppareil);
+    console.log(element);
+  });
+//   initializeIngredientButtons();
+});
+{/* <div class="Ustensiles" > ${ustensils}  </div> */}

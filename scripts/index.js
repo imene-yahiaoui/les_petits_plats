@@ -49,7 +49,7 @@ processRecipes();
  **/
 
 function card(data) {
-  const { name, description, quantity, unit, ingredients, image, time, id } =
+  const { name, description, quantity, unit, ingredients, image, time, id ,appliance} =
     data;
   const picture = `./assets/images/${image}`;
 
@@ -79,6 +79,10 @@ function card(data) {
       ? `${description.substring(0, maxLength)}...` // Tronquer et ajouter des points de suspension
       : description;
   //
+
+  //list appliance
+
+ 
   const cadre = `
     <figure class="cadre  w-[380px] h-[731] bg-white rounded-3xl  " id="${id}" style='display: block;'>  
     <div class="h-[253px] w-full rounded-3xl">
@@ -95,8 +99,11 @@ function card(data) {
     <ul class="grid  grid-cols-2 mx-auto gap-7 ingredientsCard">
       ${ingredientsList}
     </ul>
+    <div class="appareil" > ${appliance}  </div>
+  
   </div>
   </div>
+ 
     </figure>
     `;
 
