@@ -63,7 +63,7 @@ waitForIngredients().then((ingredientElements) => {
   </li>`;
     const ingredientChoix = document.getElementById("list_ingredient");
     ingredientChoix.insertAdjacentHTML("beforeEnd", ListIngredients);
-   console.log(element);
+  //  console.log(element);
   });
   initializeIngredientButtons();
 });

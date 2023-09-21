@@ -9,8 +9,8 @@ const CreatUstensilesFiltre = `
 
   <div class="bg-white w-48  overflow-hidden transition-all duration-500 max-h-0 peer-checked:max-h-[315px] z-10 absolute top-[47px] rounded-lg pt-[12px]">
     <form class="w-40 h-[37px] display:block relative border-solid border-2 border-gray-400 mx-auto">
-      <input type="search" aria-label="input ingredient" id="UstensilesSearch" class=" capitalize  w-4/5 h-full focus:outline-none text-gray-400 ">
-      <button id="searchUstensiles" class="absolute top-[2px] right-2" aria-label="search ingredient" type="submit">
+      <input type="search" aria-label="input Ustensiles" id="UstensilesSearch" class=" capitalize  w-4/5 h-full focus:outline-none text-gray-400 ">
+      <button id="searchUstensiles" class="absolute top-[2px] right-2" aria-label="searchUstensiles" type="submit">
         <i class="fa-solid fa-magnifying-glass text-sm text-gray-400"></i>
       </button>
     </form>
@@ -21,50 +21,55 @@ const CreatUstensilesFiltre = `
 `;
 sectionOption.insertAdjacentHTML("beforeend", CreatUstensilesFiltre);
 
-// function waitForIngredients() {
-//   return new Promise((resolve) => {
-//     const checkIngredients = () => {
-//       const visibleCadres = document.querySelectorAll(
-//         ".cadre[style='display: block;']"
-//       );
-//       const ingredientElements = [];
+/**
+ * recuper la list des Ustensiles
+ */
 
-//       visibleCadres.forEach((cadre) => {
-//         const ingredientsInCadre = cadre.querySelectorAll(".ingredientElement");
-//         ingredientElements.push(...ingredientsInCadre);
-//       });
+function waitForUstensiles() {
+  return new Promise((resolve) => {
+    const checkUstensiles = () => {
+      const visibleCadres = document.querySelectorAll(
+        ".cadre[style='display: block;']"
+      );
+      const UstensilesElements = [];
 
-//       if (ingredientElements.length > 0) {
-//         resolve(ingredientElements);
-//       } else {
-//         setTimeout(checkIngredients, 100); // Réessaie dans 100 ms
-//       }
-//     };
+      visibleCadres.forEach((cadre) => {
+        const UstensilesInCadre = cadre.querySelectorAll(".Ustensiles");
+   
+          UstensilesElements.push(...UstensilesInCadre);
+      });
 
-//     checkIngredients();
-//   });
-// }
+      if (UstensilesElements.length > 0) {
+        resolve(UstensilesElements);
+      } else {
+        setTimeout(checkUstensiles, 100); // Réessaie dans 100 ms
+      }
+    };
 
-// waitForIngredients().then((ingredientElements) => {
-//   const uniqueIngredients = new Set();
-//   ingredientElements.forEach((element) => {
-//     uniqueIngredients.add(element.textContent);
-//   });
-//   // Créez une nouvelle liste sans doublons à partir de l'ensemble
-//   const uniqueIngredientElements = Array.from(uniqueIngredients);
-//   // Affichez la nouvelle liste sans doublons
-//   uniqueIngredientElements.forEach((element) => {
+    checkUstensiles();
+  });
+}
+
+waitForUstensiles().then((UstensilesElements) => {
+  const uniqueUstensiles = new Set();
+  UstensilesElements.forEach((element) => {
+    uniqueUstensiles.add(element.textContent);
+  });
+  // Créez une nouvelle liste sans doublons à partir de l'ensemble
+  const uniqueUstensilesElements = Array.from(uniqueUstensiles);
+  // Affichez la nouvelle liste sans doublons
+  uniqueUstensilesElements.forEach((element) => {
     
-//     const ListIngredients = ` <li
-//   class="capitalize Ingredients  text-sm font-Manrope font-normal hover:bg-yellow-500 mb-2 py-4 pl-[18px] " >
-//     <button class="ListIngredientsBtn ">  ${element} </button>
-//   </li>`;
-//     const ingredientChoix = document.getElementById("list_ingredient");
-//     ingredientChoix.insertAdjacentHTML("beforeEnd", ListIngredients);
-//    console.log(element);
-//   });
+    const ListUstensiles = ` <li
+  class="capitalize Ingredients  text-sm font-Manrope font-normal hover:bg-yellow-500 mb-2 py-4 pl-[18px] " >
+    <button class="ListIngredientsBtn ">  ${element} </button>
+  </li>`;
+    const UstensilesChoix = document.getElementById("list_Ustensiles");
+    UstensilesChoix.insertAdjacentHTML("beforeEnd", ListUstensiles);
+   console.log("Ustensiles",element);
+  });
 //   initializeIngredientButtons();
-// });
+});
 
 
 // /**

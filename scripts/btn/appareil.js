@@ -62,8 +62,7 @@ waitForAppareil().then((AppareilElements) => {
     </li>`;
     const AppareilChoix = document.getElementById("list_Appareil");
     AppareilChoix.insertAdjacentHTML("beforeEnd", ListAppareil);
-    console.log(element);
+    // console.log("Appareil",element);
   });
 //   initializeIngredientButtons();
 });
-{/* <div class="Ustensiles" > ${ustensils}  </div> */}

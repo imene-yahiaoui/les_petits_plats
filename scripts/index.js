@@ -49,8 +49,18 @@ processRecipes();
  **/
 
 function card(data) {
-  const { name, description, quantity, unit, ingredients, image, time, id ,appliance} =
-    data;
+  const {
+    name,
+    description,
+    quantity,
+    unit,
+    ingredients,
+    image,
+    time,
+    id,
+    appliance,
+    ustensils,
+  } = data;
   const picture = `./assets/images/${image}`;
 
   // Créer une liste d'ingrédients en parcourant le tableau d'ingrédients
@@ -78,11 +88,17 @@ function card(data) {
     description.length > maxLength
       ? `${description.substring(0, maxLength)}...` // Tronquer et ajouter des points de suspension
       : description;
-  //
 
-  //list appliance
+  // Récupérer les ustensiles dans un tableau
+  const ustensilsList = [];
+  ustensils.forEach((ustensil) => {
+    ustensilsList.push(ustensil);
+  });
+  let ustensilsElement = "";
+  for (let i = 0; i < ustensilsList.length; i++) {
+    ustensilsElement = ustensilsList[i];
+  }
 
- 
   const cadre = `
     <figure class="cadre  w-[380px] h-[731] bg-white rounded-3xl  " id="${id}" style='display: block;'>  
     <div class="h-[253px] w-full rounded-3xl">
@@ -99,9 +115,12 @@ function card(data) {
     <ul class="grid  grid-cols-2 mx-auto gap-7 ingredientsCard">
       ${ingredientsList}
     </ul>
-    <div class="appareil" > ${appliance}  </div>
-  
+   
   </div>
+  <div class="appareil" > ${appliance}  </div>
+  <div class="Ustensiles" > ${ustensilsElement} 
+   </div>  
+   
   </div>
  
     </figure>
@@ -171,15 +190,15 @@ searchValue.addEventListener("input", function () {
       }
     } else {
       localStorage.removeItem("searchValue");
-      console.log("jai enlver de locale" )
+      console.log("jai enlver de locale");
       // Mettez à jour elementValues en retirant la valeur de recherche
       elementValues = elementValues.filter(
         (value) => value === valeurDeRecherche
       );
-console.log("je suprime ici ",elementValues)
-      //ici jai un probleme 
+      console.log("je suprime ici ", elementValues);
+      //ici jai un probleme
       // updateElementValuesFromLocalStorage()
-            const tagElements = document.querySelectorAll(".tagElement");
+      const tagElements = document.querySelectorAll(".tagElement");
       if (tagElements.length === 0) {
         cadre.style.display = "block"; // Affiche le cadre de recette
       } else {
