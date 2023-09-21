@@ -1,3 +1,7 @@
+const sectionOption = document.getElementById("sectionOption");
+const ingredientItems = document.querySelectorAll(".ListIngredientsBtn");
+const tagSection = document.getElementById("tags");
+
 let dataArrayLength = 0;
 /**
  * @return[data]
@@ -159,10 +163,22 @@ searchValue.addEventListener("input", function () {
         cadre.style.display = "none"; // Masque le cadre de recette
       }
     } else {
-      cadre.style.display = "block"; // Affiche le cadre de recette
-      localStorage.removeItem("searchValue", valeurDeRecherche);
+      localStorage.removeItem("searchValue");
+      console.log("jai enlver de locale" )
+      // Mettez à jour elementValues en retirant la valeur de recherche
+      elementValues = elementValues.filter(
+        (value) => value === valeurDeRecherche
+      );
+console.log("je suprime ici ",elementValues)
+      //ici jai un probleme 
+      // updateElementValuesFromLocalStorage()
+            const tagElements = document.querySelectorAll(".tagElement");
+      if (tagElements.length === 0) {
+        cadre.style.display = "block"; // Affiche le cadre de recette
+      } else {
+        initializeIngredientButtons();
+      }
     }
-   
   });
 
   updateIngedientsList(); // Mettre à jour la list des ingedients
@@ -178,6 +194,5 @@ BtnSearche.addEventListener("click", (e) => {
 // Supprimer les données du localStorage avant le rafraîchissement de la page
 window.addEventListener("beforeunload", () => {
   const valeurDeRecherche = searchValue.value.toLowerCase();
-  localStorage.removeItem("searchValue", valeurDeRecherche);
-
+  localStorage.removeItem("searchValue");
 });

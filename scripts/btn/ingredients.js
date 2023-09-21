@@ -1,6 +1,4 @@
-const sectionOption = document.getElementById("sectionoption");
-const ingredientItems = document.querySelectorAll(".ListIngredientsBtn");
-const tagSection = document.getElementById("tags");
+
 
 //add html brn CreatIngredientFiltre
 
@@ -107,6 +105,7 @@ valueIngredient.addEventListener("input", function () {
 //return[ value btn ingredient] //cree le tags
 let elementValues = [];
 function initializeIngredientButtons() {
+
   const ingredientList = document.querySelectorAll(".Ingredients");
   ingredientList.forEach((button) => {
     button.addEventListener("click", function () {
@@ -122,12 +121,32 @@ function initializeIngredientButtons() {
       </li>`;
       tagSection.insertAdjacentHTML("beforeEnd", tag);
 
+     updateElementValuesFromLocalStorage();
       searchWithTags(elementValues);
       closeTag(valueBtn);
       updateNumberOfCards();
     });
   });
 }
+
+
+//try
+// Fonction pour mettre à jour elementValues à partir du localStorage
+function updateElementValuesFromLocalStorage() {
+  if (localStorage !== null) {
+    const searchValue = localStorage.getItem("searchValue");
+     if (searchValue) {
+      // Assurez-vous que la valeur n'est pas déjà présente dans elementValues
+      if (!elementValues.includes(searchValue)) {
+        elementValues.push(searchValue);
+      }
+    } 
+    else {
+        elementValues = elementValues.filter(value => value !== searchValue);
+    }
+   }
+}
+
 
 /**
  * return[close tag]
