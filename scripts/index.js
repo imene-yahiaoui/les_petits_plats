@@ -1,27 +1,9 @@
-const sectionOption = document.getElementById("sectionOption");
-const ingredientItems = document.querySelectorAll(".ListIngredientsBtn");
-const tagSection = document.getElementById("tags");
 
-let dataArrayLength = 0;
 /**
  * @return[data]
  *
  */
 let cadreCount = 0;
-const fetchData = async () => {
-  try {
-    const requete = await fetch("../public/recipes.json", {
-      method: "GET",
-    });
-    if (requete.ok) {
-      const data = await requete.json();
-
-      return data;
-    }
-  } catch (e) {
-    console.log(e);
-  }
-};
 
 /**
  * @return[data]
@@ -31,114 +13,21 @@ const fetchData = async () => {
 
 async function processRecipes() {
   const dataArray = await fetchData();
-  dataArrayLength = dataArray.length;
 
   dataArray.reverse();
   dataArray.forEach((data) => {
-    card(data);
+    const cadre = card(data);
+    cadreCount++;
+    document.getElementById("cards").insertAdjacentHTML("afterbegin", cadre);
   });
   numbreOfCard();
-}
-processRecipes();
-
-/**
- * ingredientsbtn
- * @param[data ]
- * @return[cadres]
- *@return[cader count]
- **/
-
-function card(data) {
-  const {
-    name,
-    description,
-    quantity,
-    unit,
-    ingredients,
-    image,
-    time,
-    id,
-    appliance,
-    ustensils,
-  } = data;
-  const picture = `./assets/images/${image}`;
-
-  // Créer une liste d'ingrédients en parcourant le tableau d'ingrédients
-  const ingredientsList = ingredients
-    .map(
-      (ingr) => `
- <li>
-   <p class="ingredientElement">${ingr.ingredient}</p>
-   ${
-     ingr.quantity
-       ? `<p class="text-slate-400 	tracking-widest	">${ingr.quantity} ${
-           ingr.unit || ""
-         }</p>`
-       : ""
-   }
- </li>
-`
-    )
-    .join("");
-
-  const maxLength = 180;
-
-  // Tronquer la description si elle dépasse maxLength
-  const truncatedDescription =
-    description.length > maxLength
-      ? `${description.substring(0, maxLength)}...` // Tronquer et ajouter des points de suspension
-      : description;
-
-  // Récupérer les ustensiles dans un tableau
-  const ustensilsList = [];
-  ustensils.forEach((ustensil) => {
-    ustensilsList.push(ustensil);
-  });
-  let ustensilsElement = "";
-  for (let i = 0; i < ustensilsList.length; i++) {
-    ustensilsElement = ustensilsList[i];
-  }
-
-  const cadre = `
-    <figure class="cadre  w-[380px] h-[731] bg-white rounded-3xl  " id="${id}" style='display: block;'>  
-    <div class="h-[253px] w-full rounded-3xl">
-    <img  class="h-full w-full object-cover rounded-3xl rounded-b-lg" src="${picture}" alt="recette de ${name}">
-    <p class="relative w-[80px] bg-yellow-500  text-center h-7 rounded-3xl 	top-[-232px]  left-[291px]"> ${time} min </p>
-    </div>
-    <div class="flex flex-col py-7 w-4/5 mx-auto gap-4">
-    <h1 class="font-anton text-lg font-normal titlesCadre"> ${name} </h1>
-    <p class="text-slate-400 font-bold	tracking-widest	">RECETTE</p>
-    <figcaption class="descriptionCadre"> ${truncatedDescription} </figcaption>
-    <div class="">
-    <p class="text-slate-400 font-bold	tracking-widest	uppercase pb-3"> Ingrédients </p>
-
-    <ul class="grid  grid-cols-2 mx-auto gap-7 ingredientsCard">
-      ${ingredientsList}
-    </ul>
-   
-  </div>
-  <div class="appareil" > ${appliance}  </div>
-  <div class="Ustensiles" > ${ustensilsElement} 
-   </div>  
-   
-  </div>
- 
-    </figure>
-    `;
-
-  document.getElementById("cards").insertAdjacentHTML("afterbegin", cadre);
-  cadreCount++;
 }
 
 function numbreOfCard() {
   const sectionFiltre = document.getElementById("sectionFiltre");
-
-  const recipenumbre = `
-  <p class="font-Anton  text-[21px] font-normal" id="cardesNumber"> ${cadreCount}  recettes</p>
-  `;
-  sectionFiltre.insertAdjacentHTML("beforeend", recipenumbre);
+  sectionFiltre.insertAdjacentHTML("beforeend", rendreCardCount(cadreCount));
 }
-
+processRecipes();
 fetchData();
 
 //metre a jour le numero de cardes
@@ -148,19 +37,10 @@ function updateNumberOfCards() {
   );
   const numberOfVisibleCadres = visibleCadres.length;
   const sectionFiltre = document.getElementById("cardesNumber");
-
-  const recipenumbre = `
-    <p class="font-Anton text-[21px] font-normal">${numberOfVisibleCadres} recettes</p>
-  `;
-  sectionFiltre.innerHTML = recipenumbre;
+  sectionFiltre.innerHTML = rendreCardCount(numberOfVisibleCadres)
 }
 
-// Récupère la valeur de recherche
-const searchValue = document.getElementById("searche");
-const titlesCadre = document.querySelectorAll(".titlesCadre");
-const ingredientsCard = document.querySelectorAll(".ingredientsCard");
-const descriptionCadre = document.querySelectorAll(".descriptionCadre");
-
+//////////////////recherche////////////
 searchValue.addEventListener("input", function () {
   const valeurDeRecherche = searchValue.value.toLowerCase();
 
@@ -203,15 +83,15 @@ searchValue.addEventListener("input", function () {
         cadre.style.display = "block"; // Affiche le cadre de recette
       } else {
         initializeIngredientButtons();
+        initializeAppareilButtons();
       }
     }
   });
 
+  updateAppareilList(); ///Mettre à jour la list des appareill
   updateIngedientsList(); // Mettre à jour la list des ingedients
   updateNumberOfCards(); // Mettre à jour le nombre de cadres visibles
 });
-
-const BtnSearche = document.getElementById("searcheBtn");
 
 BtnSearche.addEventListener("click", (e) => {
   e.preventDefault();
