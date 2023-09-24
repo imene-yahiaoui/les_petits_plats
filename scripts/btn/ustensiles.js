@@ -9,114 +9,94 @@ const ustensilesFilterSection = createFilterSection(
 
 sectionOption.insertAdjacentHTML("beforeend", ustensilesFilterSection);
 
-waitForElements(".Ustensile", "list_Ustensiles", "Ustensiles",".Ustensiles");
+waitForElements(
+  ".Ustensile",
+  "list_Ustensiles",
+  "Ustensiles",
+  ".Ustensiles",
+  "tagUstensile",
+  "closeTagUstensile",
+  "data-tag-value-Ustensile"
+);
 
 searcheInbtn("UstensilesSearch", ".Ustensiles");
-initializeButtons(".Ustensiles");
- 
+initializeButtons(
+  ".Ustensiles",
+  "tagUstensile",
+  "closeTagUstensile",
+  "data-tag-value-Ustensile"
+);
 
-// // //try
-// // // Fonction pour mettre à jour elementValues à partir du localStorage
-// // function updateElementValuesFromLocalStorage() {
-// //   if (localStorage !== null) {
-// //     const searchValue = localStorage.getItem("searchValue");
-// //      if (searchValue) {
-// //       // Assurez-vous que la valeur n'est pas déjà présente dans elementValues
-// //       if (!elementValues.includes(searchValue)) {
-// //         elementValues.push(searchValue);
-// //       }
-// //     }
-// //     else {
-// //         elementValues = elementValues.filter(value => value !== searchValue);
-// //     }
-// //    }
-// // }
+//  closeBtnTag(".tagUstensile", ".closeTagUstensile", "data-tag-value-Ustensile");
 
-// // /**
-// //  * return[close tag]
-// //  */
-// function closeTag() {
-//   const tagElementsUstensiles = document.querySelectorAll(".tagElementUstensiles");
+function closeBtnTagUstensile() {
+  const tagElements = document.querySelectorAll(".tagUstensile");
 
-//   tagElementsUstensiles.forEach((tagElement) => {
-//     const btnCloseTagUstensiles = tagElement.querySelector(".closeTagUstensiles");
-//     const tagValueToRemove = btnCloseTagUstensiles.getAttribute("data-tag-value-Ustensiles");
+  tagElements.forEach((tagElement) => {
+    const btnCloseTag = tagElement.querySelector(".closeTagUstensile");
+    const tagValueToRemove = btnCloseTag.getAttribute(
+      "data-tag-value-Ustensile"
+    );
+    console.log("Tag to remove:", tagValueToRemove);
+    btnCloseTag.addEventListener("click", function () {
+      console.log("je entend le click");
+      console.log("Tag to remove:", tagValueToRemove);
+      tagElement.remove();
 
-//     btnCloseTagUstensiles.addEventListener("click", function () {
-//       console.log("Tag to remove:", tagValueToRemove);
-//       tagElement.remove();
+      // Retirez la valeur du tag du tableau elementValues
+      elementValues = elementValues.filter(
+        (value) => value !== tagValueToRemove
+      );
+      updateUstensileList()
+      if (elementValues.length === 0) {
+        searchWithTags([]);
+      } else {
+        searchWithTags(elementValues);
+      }
+      updateNumberOfCards();
+    });
+  });
+}
 
-//       // Retirez la valeur du tag du tableau elementValues
-//       elementUstensilesValues = elementUstensilesValues.filter(
-//         (value) => value !== tagValueToRemove
-//       );
+/**
+ * @return[Ingedients List]
+ */
+function updateUstensileList() {
+  const visibleCadres = document.querySelectorAll(
+    ".cadre[style='display: block;']"
+  );
+  const elements = [];
 
-//     //   updateIngedientsList();
+  visibleCadres.forEach((cadre) => {
+    const elementsInCadre = cadre.querySelectorAll(".Ustensile");
+    elements.push(...elementsInCadre);
+  });
 
-//       // Vérifie s'il ne reste plus aucun tag, puis affiche toutes les recettes
-//       if (elementUstensilesValues.length === 0) {
-//         searchWithTags([]);
-//       } else {
-//         searchWithTags(elementUstensilesValues);
-//       }
-//      updateNumberOfCards();
-//     });
-//   });
-// }
+  const uniqueIngredients = new Set();
+  elements.forEach((element) => {
+    uniqueIngredients.add(element.textContent);
+  });
 
-// function searchWithTags(tagValuesUstensiles) {
+  // Create a new list without duplicates from the set
+  const uniqueIngredientElements = Array.from(uniqueIngredients);
 
-//   const tagValueUstensiles = tagValuesUstensiles.map((value) => value.toLowerCase());
-//   const cadresRecettes = document.querySelectorAll(".cadre");
-//   // Vérifie si tous les tags ont été supprimés
-//   console.log("tagValuUstensilese.length  ", tagValueUstensiles.length);
-//   const allTagsRemoved = tagValueUstensiles.length < 0;
+  // Clear the existing list of ingredients
+  const ingredientChoix = document.getElementById("list_Ustensiles");
+  ingredientChoix.innerHTML = "";
 
-//   cadresRecettes.forEach((cadre) => {
-//     const Ustensiles = cadre.querySelector(".Ustensiles").textContent.toLowerCase();
+  // Display the new list without duplicates
+  uniqueIngredientElements.forEach((element) => {
+    ingredientChoix.insertAdjacentHTML(
+      "beforeEnd",
+      ListItem("Ustensiles", element)
+    );
+  });
 
-//     // Vérifie que tout les tags présents dans la recette
-//     const allTagsInRecipe = tagValueUstensiles.every(
-//       (tag) =>
-//       Ustensiles.includes(tag)
-//     );
-//     console.log("tagValueUstensiles.length ", tagValueUstensiles.length);
-
-//     if (allTagsRemoved || allTagsInRecipe) {
-//       cadre.style.display = "block"; // Affiche le cadre de recette
-//     } else {
-//       cadre.style.display = "none"; // Masque le cadre de recette
-//     }
-//   });
-
-//   // Si aucun tag n'a été supprimé, conserve l'état précédent de l'affichage
-//   if (!allTagsRemoved) {
-//     updateIngedientsList();
-//   }
-// }
-
-// // /**
-// //  * @return[Ingedients List]
-// //  */
-// function updateIngedientsList() {
-//   waitForUstensiles().then((UstensilesElements) => {
-//     const uniqueUstensiles = new Set();
-//     UstensilesElements.forEach((element) => {
-//       uniqueUstensiles.add(element.textContent);
-//     });
-//     // Créez une nouvelle liste sans doublons à partir de l'ensemble
-//     const uniqueUstensilesElements = Array.from(uniqueUstensiles);
-//     // Supprimez  tout les éléments  de la liste des ingrédients
-//     const UstensilesChoix = document.getElementById("list_Ustensiles");
-//     UstensilesChoix.innerHTML = "";
-//     // Affichez la nouvelle liste sans doublons
-//     uniqueUstensilesElements.forEach((element) => {
-//       const ListUstensiles = ` <li
-//       class="Ustensiles  text-sm font-Manrope font-normal hover:bg-yellow-500 mb-2 py-4 pl-[18px] text-transform: capitalize" >
-//         <button value="${element}" class="ListUstensilesBtn ">  ${element} </button>
-//       </li>`;
-//       UstensilesChoix.insertAdjacentHTML("beforeEnd", ListUstensiles);
-//     });
-//     initializeUstensilesButtons();
-//   });
-// }
+  // Initialize buttons or perform any other necessary actions
+  initializeButtons(
+    ".Ustensiles",
+    "tagUstensile",
+    "closeTagUstensile",
+    "data-tag-value-Ustensile"
+  );
+}

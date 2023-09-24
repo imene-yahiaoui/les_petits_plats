@@ -134,10 +134,11 @@ function ListItem(element,item) {
 }
 
 
-function Tag(tag,closeTag,dataValue,value){
+function Tag(tag,closeTag,dataValue, valueBtn){
   return `<li
   class="${tag}  text-sm font-Manrope font-normal bg-yellow-500 mb-2 py-4   text-transform: capitalize flex row px-4   rounded-md mr-10" >
-   <p class="pr-14">  ${value}  </p>
-   <button class="font-bold ${closeTag} ${dataValue}=${value}"> <i class="fa-solid fa-x"></i> </button>
+   <p class="pr-14">  ${valueBtn}  </p>
+   <button class="font-bold ${closeTag}" ${dataValue}="${valueBtn}"> <i class="fa-solid fa-x"></i> </button>
   </li>`;
+
 }

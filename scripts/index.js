@@ -1,4 +1,3 @@
-
 /**
  * @return[data]
  *
@@ -37,13 +36,12 @@ function updateNumberOfCards() {
   );
   const numberOfVisibleCadres = visibleCadres.length;
   const sectionFiltre = document.getElementById("cardesNumber");
-  sectionFiltre.innerHTML = rendreCardCount(numberOfVisibleCadres)
+  sectionFiltre.innerHTML = rendreCardCount(numberOfVisibleCadres);
 }
 
 //////////////////recherche////////////
 searchValue.addEventListener("input", function () {
   const valeurDeRecherche = searchValue.value.toLowerCase();
-
   // Parcours les cadres de recette pour trouver correspondances
   const cadresRecettes = document.querySelectorAll(".cadre");
   cadresRecettes.forEach((cadre) => {
@@ -58,7 +56,7 @@ searchValue.addEventListener("input", function () {
     // Vérifie si la valeur de recherche est présente dans le titre, la description ou les ingrédients
     if (valeurDeRecherche.length > 2) {
       // Stocker la valeur de recherche dans le localStorage
-      localStorage.setItem("searchValue", valeurDeRecherche);
+      // localStorage.setItem("searchValue", valeurDeRecherche);
       if (
         titre.includes(valeurDeRecherche) ||
         description.includes(valeurDeRecherche) ||
@@ -69,28 +67,30 @@ searchValue.addEventListener("input", function () {
         cadre.style.display = "none"; // Masque le cadre de recette
       }
     } else {
-      localStorage.removeItem("searchValue");
-      console.log("jai enlver de locale");
-      // Mettez à jour elementValues en retirant la valeur de recherche
-      elementValues = elementValues.filter(
-        (value) => value === valeurDeRecherche
-      );
-      console.log("je suprime ici ", elementValues);
-      //ici jai un probleme
-      // updateElementValuesFromLocalStorage()
-      const tagElements = document.querySelectorAll(".tagElement");
-      if (tagElements.length === 0) {
-        cadre.style.display = "block"; // Affiche le cadre de recette
-      } else {
-        initializeIngredientButtons();
-        initializeAppareilButtons();
-      }
+      cadre.style.display = "block";
+      //   localStorage.removeItem("searchValue");
+      //   console.log("jai enlver de locale");
+      //   // Mettez à jour elementValues en retirant la valeur de recherche
+      //   elementValues = elementValues.filter(
+      //     (value) => value === valeurDeRecherche
+      //   );
+      //   console.log("je suprime ici ", elementValues);
+      //   //ici jai un probleme
+      //   // updateElementValuesFromLocalStorage()
+      //   const tagElements = document.querySelectorAll(".tagElement");
+      //   if (tagElements.length === 0) {
+      //     cadre.style.display = "block"; // Affiche le cadre de recette
+      //   } else {
+      //     initializeButtons(ElementTag, tag, closeTag, dataValue);
+      //   }
+      // }
     }
   });
-
-  updateAppareilList(); ///Mettre à jour la list des appareill
-  updateIngedientsList(); // Mettre à jour la list des ingedients
-  updateNumberOfCards(); // Mettre à jour le nombre de cadres visibles
+  // updateAppareilList();
+  updateNumberOfCards();
+  updateIngredientsList();
+  updateAppareilList();
+  updateUstensileList();
 });
 
 BtnSearche.addEventListener("click", (e) => {
@@ -98,7 +98,7 @@ BtnSearche.addEventListener("click", (e) => {
 });
 
 // Supprimer les données du localStorage avant le rafraîchissement de la page
-window.addEventListener("beforeunload", () => {
-  const valeurDeRecherche = searchValue.value.toLowerCase();
-  localStorage.removeItem("searchValue");
-});
+// window.addEventListener("beforeunload", () => {
+//   const valeurDeRecherche = searchValue.value.toLowerCase();
+//   localStorage.removeItem("searchValue");
+// });

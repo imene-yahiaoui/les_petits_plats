@@ -1,7 +1,16 @@
 /**
  * afficher la list  dans les btn
  */
-function waitForElements(selector, listId, typeElement,ElementTag) {
+function waitForElements(
+  selector,
+  listId,
+  typeElement,
+  ElementTag,
+  tag,
+  closeTag,
+  dataValue,
+  
+) {
   return new Promise((resolve) => {
     const checkElements = () => {
       const visibleCadres = document.querySelectorAll(
@@ -22,7 +31,9 @@ function waitForElements(selector, listId, typeElement,ElementTag) {
     };
 
     checkElements();
-  }).then((elements) => {
+  })
+  
+  .then((elements) => {
     const uniqueElements = new Set();
     elements.forEach((element) => {
       uniqueElements.add(element.textContent);
@@ -34,16 +45,15 @@ function waitForElements(selector, listId, typeElement,ElementTag) {
       const list = document.getElementById(listId);
       list.insertAdjacentHTML("beforeEnd", ListItem(typeElement, element));
     });
-    initializeButtons(ElementTag)
+    initializeButtons(ElementTag, tag, closeTag, dataValue);
+    
   });
 }
-
 
 /**
  * @param[input search ]
  * * @return[List Ingredients]
  */
-
 function searcheInbtn(ElementId, Element) {
   const valueElement = document.getElementById(ElementId);
   valueElement.addEventListener("input", function () {
@@ -78,58 +88,82 @@ function searcheInbtn(ElementId, Element) {
  */
 
 let elementValues = [];
-function initializeButtons(ElementTag,tag,closeTag,dataValue) {
+function initializeButtons(ElementTag, tag, closeTag, dataValue) {
   const ElementList = document.querySelectorAll(ElementTag);
   ElementList.forEach((button) => {
     button.addEventListener("click", function () {
       const valueBtn = button.textContent.trim();
       elementValues.push(valueBtn);
       console.log("Tags :", elementValues);
-      console.log("TagsLength :", elementValues.length);
-      const Tag= `<li
-      class="${tag}  text-sm font-Manrope font-normal bg-yellow-500 mb-2 py-4   text-transform: capitalize flex row px-4   rounded-md mr-10" >
-       <p class="pr-14">  ${valueBtn}  </p>
-       <button class="font-bold ${closeTag} ${dataValue}=${valueBtn}"> <i class="fa-solid fa-x"></i> </button>
-      </li>`;
-      tagSection.insertAdjacentHTML("beforeEnd", Tag);
-       // updateElementValuesFromLocalStorage();
-      // searchWithTags(elementValues);
-       // closeTag(valueBtn);
-      // updateNumberOfCards();
-    });
-  });
-}
+    
 
-
-// // /**
-///////////////////////////:jai un probelem ici ////////////
-// //  * return[close tag]
-// //  */
-function closeTag(tag,closeTag,dataValue) {
-  const tagElements = document.querySelectorAll(tag);
-
-  tagElements.forEach((tagElement) => {
-    const btnCloseTag = tagElement.querySelector(closeTag);
-    const tagValueToRemove = btnCloseTag.getAttribute(dataValue);
-
-    btnCloseTag.addEventListener("click", function () {
-      console.log("Tag to remove:", tagValueToRemove);
-      tagElement.remove();
-
-      // Retirez la valeur du tag du tableau elementValues
-      elementValues = elementValues.filter(
-        (value) => value !== tagValueToRemove
+      tagSection.insertAdjacentHTML(
+        "beforeEnd",
+        Tag(tag, closeTag, dataValue, valueBtn)
       );
-
-      updateIngedientsList();
-
-      // Vérifie s'il ne reste plus aucun tag, puis affiche toutes les recettes
-      if (elementValues.length === 0) {
-        searchWithTags([]);
-      } else {
-        searchWithTags(elementValues);
-      }
-    //   updateNumberOfCards();
+      closeBtnTagAppareil(valueBtn);
+      closeBtnTagIngredient(valueBtn);
+      closeBtnTagUstensile(valueBtn)
+      searchWithTags(elementValues);
+    
+      updateNumberOfCards();
     });
   });
 }
+
+
+
+// /**
+//  * @return[ searche whith tags]
+//  */
+// //if input est la
+
+// const searchValue = document.getElementById("searche");
+// const valeurDeRecherche = searchValue.value.toLowerCase();
+
+function searchWithTags(tagValues) {
+  const tagValue = tagValues.map((value) => value.toLowerCase());
+  const cadresRecettes = document.querySelectorAll(".cadre");
+  // Vérifie si tous les tags ont été supprimés
+  console.log("tagValue.length 1 ", tagValue.length);
+  const allTagsRemoved = tagValue.length < 0;
+
+  cadresRecettes.forEach((cadre) => {
+    const titre = cadre.querySelector(".titlesCadre").textContent.toLowerCase();
+    const description = cadre
+      .querySelector(".descriptionCadre")
+      .textContent.toLowerCase();
+    const ingredients = cadre
+      .querySelector(".ingredientsCard")
+      .textContent.toLowerCase();
+    const Appareil = cadre.querySelector(".appareil").textContent.toLowerCase();
+    const Ustensiles = cadre
+      .querySelector(".Ustensiles")
+      .textContent.toLowerCase();
+
+    const allTagsInRecipe = tagValue.every(
+      (tag) =>
+        titre.includes(tag) ||
+        description.includes(tag) ||
+        ingredients.includes(tag) ||
+        Appareil.includes(tag) ||
+        Ustensiles.includes(tag)
+    );
+ 
+    if (allTagsRemoved || allTagsInRecipe) {
+      cadre.style.display = "block"; // Affiche le cadre de recette
+    } else {
+      cadre.style.display = "none"; // Masque le cadre de recette
+    }
+  });
+
+  // Si aucun tag n'a été supprimé, conserve l'état précédent de l'affichage
+  if (!allTagsRemoved) {
+    updateIngredientsList();
+    updateAppareilList();
+    updateUstensileList();
+  }
+}
+ 
+
+ 

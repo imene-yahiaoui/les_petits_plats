@@ -1,4 +1,3 @@
- 
 const ingredientsFilterSection = createFilterSection(
   "left-[19px]",
   "Ingrédients",
@@ -9,130 +8,95 @@ const ingredientsFilterSection = createFilterSection(
 );
 
 sectionOption.insertAdjacentHTML("afterbegin", ingredientsFilterSection);
-waitForElements(".ingredientElement", "list_ingredient", "Ingredients",".Ingredients");
+
+waitForElements(
+  ".ingredientElement",
+  "list_ingredient",
+  "Ingredients",
+  ".Ingredients",
+  "tagIngredients",
+  "closeTagIngredients",
+  "data-value-Ingredients"
+);
+
 searcheInbtn("ingredientSearch", ".Ingredients");
-// initializeButtons(".Ingredients","tagIngredients","closeTagIngredients","data-tag-value-Ingredients");
-initializeButtons(".Ingredients", "tagIngredients", "closeTagIngredients", "data-tag-value-Ingredients");
- closeTag("tagIngredients","closeTagIngredients","data-tag-value-Ingredients")
 
- 
+initializeButtons(
+  ".Ingredients",
+  "tagIngredients",
+  "closeTagIngredients",
+  "data-value-Ingredients"
+);
 
-// //try
-// // Fonction pour mettre à jour elementValues à partir du localStorage
-// function updateElementValuesFromLocalStorage() {
-//   if (localStorage !== null) {
-//     const searchValue = localStorage.getItem("searchValue");
-//     if (searchValue) {
-//       // Assurez-vous que la valeur n'est pas déjà présente dans elementValues
-//       if (!elementValues.includes(searchValue)) {
-//         elementValues.push(searchValue);
-//       }
-//     } else {
-//       elementValues = elementValues.filter((value) => value !== searchValue);
-//     }
-//   }
-// }
+function closeBtnTagIngredient() {
+  const tagElements = document.querySelectorAll(".tagIngredients");
 
-// /**
-//  * return[close tag]
-//  */
-// function closeTag() {
-//   const tagElements = document.querySelectorAll(".tagElement");
+  tagElements.forEach((tagElement) => {
+    const btnCloseTag = tagElement.querySelector(".closeTagIngredients");
+    const tagValueToRemove = btnCloseTag.getAttribute("data-value-Ingredients");
+    console.log("Tag to remove:", tagValueToRemove);
+    btnCloseTag.addEventListener("click", function () {
+      console.log("je entend le click");
+      console.log("Tag to remove:", tagValueToRemove);
+      tagElement.remove();
 
-//   tagElements.forEach((tagElement) => {
-//     const btnCloseTag = tagElement.querySelector(".closeTag");
-//     const tagValueToRemove = btnCloseTag.getAttribute("data-tag-value");
+      // Retirez la valeur du tag du tableau elementValues
+      elementValues = elementValues.filter(
+        (value) => value !== tagValueToRemove
+      );
 
-//     btnCloseTag.addEventListener("click", function () {
-//       console.log("Tag to remove:", tagValueToRemove);
-//       tagElement.remove();
+      updateIngredientsList();
 
-//       // Retirez la valeur du tag du tableau elementValues
-//       elementValues = elementValues.filter(
-//         (value) => value !== tagValueToRemove
-//       );
+      //  Vérifie s'il ne reste plus aucun tag, puis affiche toutes les recettes
+      if (elementValues.length === 0) {
+        searchWithTags([]);
+      } else {
+        searchWithTags(elementValues);
+      }
+      updateNumberOfCards();
+    });
+  });
+}
 
-//       updateIngedientsList();
+/**
+ * @return[Ingedients List]
+ */
+function updateIngredientsList() {
+  const visibleCadres = document.querySelectorAll(
+    ".cadre[style='display: block;']"
+  );
+  const elements = [];
 
-//       // Vérifie s'il ne reste plus aucun tag, puis affiche toutes les recettes
-//       if (elementValues.length === 0) {
-//         searchWithTags([]);
-//       } else {
-//         searchWithTags(elementValues);
-//       }
-//       updateNumberOfCards();
-//     });
-//   });
-// }
+  visibleCadres.forEach((cadre) => {
+    const elementsInCadre = cadre.querySelectorAll(".ingredientElement");
+    elements.push(...elementsInCadre);
+  });
 
-// /**
-//  * @return[ searche whith tags]
-//  */
-// //if input est la
+  const uniqueIngredients = new Set();
+  elements.forEach((element) => {
+    uniqueIngredients.add(element.textContent);
+  });
 
-// // const searchValue = document.getElementById("searche");
-// // const valeurDeRecherche = searchValue.value.toLowerCase();
+  // Create a new list without duplicates from the set
+  const uniqueIngredientElements = Array.from(uniqueIngredients);
 
-// function searchWithTags(tagValues) {
-//   const tagValue = tagValues.map((value) => value.toLowerCase());
-//   const cadresRecettes = document.querySelectorAll(".cadre");
-//   // Vérifie si tous les tags ont été supprimés
-//   console.log("tagValue.length 1 ", tagValue.length);
-//   const allTagsRemoved = tagValue.length < 0;
+  // Clear the existing list of ingredients
+  const ingredientChoix = document.getElementById("list_ingredient");
+  ingredientChoix.innerHTML = "";
 
-//   cadresRecettes.forEach((cadre) => {
-//     const titre = cadre.querySelector(".titlesCadre").textContent.toLowerCase();
-//     const description = cadre
-//       .querySelector(".descriptionCadre")
-//       .textContent.toLowerCase();
-//     const ingredients = cadre
-//       .querySelector(".ingredientsCard")
-//       .textContent.toLowerCase();
+  // Display the new list without duplicates
+  uniqueIngredientElements.forEach((element) => {
+    ingredientChoix.insertAdjacentHTML(
+      "beforeEnd",
+      ListItem("Ingredients", element)
+    );
+  });
 
-//     // Vérifie que tout les tags présents dans la recette
-//     const allTagsInRecipe = tagValue.every(
-//       (tag) =>
-//         titre.includes(tag) ||
-//         description.includes(tag) ||
-//         ingredients.includes(tag)
-//     );
-//     console.log("tagValue.length ", tagValue.length);
-
-//     if (allTagsRemoved || allTagsInRecipe) {
-//       cadre.style.display = "block"; // Affiche le cadre de recette
-//     } else {
-//       cadre.style.display = "none"; // Masque le cadre de recette
-//     }
-//   });
-
-//   // Si aucun tag n'a été supprimé, conserve l'état précédent de l'affichage
-//   if (!allTagsRemoved) {
-//     updateIngedientsList();
-//   }
-// }
-
-// /**
-//  * @return[Ingedients List]
-//  */
-// function updateIngedientsList() {
-//   waitForIngredients().then((ingredientElements) => {
-//     const uniqueIngredients = new Set();
-//     ingredientElements.forEach((element) => {
-//       uniqueIngredients.add(element.textContent);
-//     });
-//     // Créez une nouvelle liste sans doublons à partir de l'ensemble
-//     const uniqueIngredientElements = Array.from(uniqueIngredients);
-//     // Supprimez  tout les éléments  de la liste des ingrédients
-//     const ingredientChoix = document.getElementById("list_ingredient");
-//     ingredientChoix.innerHTML = "";
-//     // Affichez la nouvelle liste sans doublons
-//     uniqueIngredientElements.forEach((element) => {
-//       const ListIngredients = ` <li
-//       class="Ingredients  text-sm font-Manrope font-normal hover:bg-yellow-500 mb-2 py-4 pl-[18px] text-transform: capitalize" >
-//         <button value="${element}" class="ListIngredientsBtn ">  ${element} </button>
-//       </li>`;
-//       ingredientChoix.insertAdjacentHTML("beforeEnd", ListIngredients);
-//     });
-//     initializeIngredientButtons();
-//   });
-// }
+  // Initialize buttons or perform any other necessary actions
+  initializeButtons(
+    ".Ingredients",
+    "tagIngredients",
+    "closeTagIngredients",
+    "data-value-Ingredients"
+  );
+}

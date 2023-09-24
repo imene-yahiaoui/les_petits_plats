@@ -8,100 +8,94 @@ const AppareilFilterSection = createFilterSection(
 );
 
 sectionOption.insertAdjacentHTML("beforeend", AppareilFilterSection);
-waitForElements(".appareil", "list_Appareil", "Appareils", ".Appareils");
+waitForElements(
+  ".appareil",
+  "list_Appareil",
+  "Appareils",
+  ".Appareils",
+  "tagAppareils",
+  "closeAppareils",
+  "data-tag-value-Appareils"
+);
 
 searcheInbtn("AppareilSearch", ".Appareils");
-initializeButtons(".Appareils");
+initializeButtons(
+  ".Appareils",
+  "tagAppareils",
+  "closeAppareils",
+  "data-tag-value-Appareils"
+);
 
- 
-// /**
-//  * return[close tag]
-// //  */
-// function closeAppareilTag() {
-//   const tagElementsAppareil = document.querySelectorAll(".tagElementAppareil");
+function closeBtnTagAppareil() {
+  const tagElements = document.querySelectorAll(".tagAppareils");
 
-//   tagElementsAppareil.forEach((tagElementAppareil) => {
-//     const btnCloseTagAppareil =
-//       tagElementAppareil.querySelector(".closeTagAppareil");
-//     const tagValueToRemoveAppareil = btnCloseTagAppareil.getAttribute(
-//       "data-tag-value-Appareil"
-//     );
+  tagElements.forEach((tagElement) => {
+    const btnCloseTag = tagElement.querySelector(".closeAppareils");
+    const tagValueToRemove = btnCloseTag.getAttribute(
+      "data-tag-value-Appareils"
+    );
+    console.log("Tag to remove:", tagValueToRemove);
+    btnCloseTag.addEventListener("click", function () {
+      console.log("je entend le click");
+      console.log("Tag to remove:", tagValueToRemove);
+      tagElement.remove();
 
-//     btnCloseTagAppareil.addEventListener("click", function () {
-//       console.log("Tag to remove:", tagValueToRemoveAppareil);
-//       tagElementAppareil.remove();
+      // Retirez la valeur du tag du tableau elementValues
+      elementValues = elementValues.filter(
+        (value) => value !== tagValueToRemove
+      );
+      updateAppareilList();
 
-//       // Retirez la valeur du tag du tableau elementValues
-//       elementAppareilValues = elementAppareilValues.filter(
-//         (value) => value !== tagValueToRemoveAppareil
-//       );
+      //  Vérifie s'il ne reste plus aucun tag, puis affiche toutes les recettes
+      if (elementValues.length === 0) {
+        searchWithTags([]);
+      } else {
+        searchWithTags(elementValues);
+      }
+      updateNumberOfCards();
+    });
+  });
+}
 
-//       updateAppareilList();
+/**
+ * @return[Ingedients List]
+ */
+function updateAppareilList() {
+  const visibleCadres = document.querySelectorAll(
+    ".cadre[style='display: block;']"
+  );
+  const elements = [];
 
-//       // Vérifie s'il ne reste plus aucun tag, puis affiche toutes les recettes
-//       if (elementAppareilValues.length === 0) {
-//         searchWithTagsAppareil([]);
-//       } else {
-//         searchWithTagsAppareil(elementAppareilValues);
-//       }
-//       updateNumberOfCards();
-//     });
-//   });
-// }
+  visibleCadres.forEach((cadre) => {
+    const elementsInCadre = cadre.querySelectorAll(".appareil");
+    elements.push(...elementsInCadre);
+  });
 
-// function searchWithTagsAppareil(tagValuesAppareil) {
-//   const tagValueAppareil = tagValuesAppareil.map((value) =>
-//     value.toLowerCase()
-//   );
-//   const cadresRecettes = document.querySelectorAll(".cadre");
-//   // Vérifie si tous les tags ont été supprimés
-//   console.log("tagValuUstensilese.length  ", tagValueAppareil.length);
-//   const allTagsRemoved = tagValueAppareil.length < 0;
+  const uniqueIngredients = new Set();
+  elements.forEach((element) => {
+    uniqueIngredients.add(element.textContent);
+  });
 
-//   cadresRecettes.forEach((cadre) => {
-//     const Appareil = cadre.querySelector(".appareil").textContent.toLowerCase();
+  // Create a new list without duplicates from the set
+  const uniqueIngredientElements = Array.from(uniqueIngredients);
 
-//     // Vérifie que tout les tags présents dans la recette
-//     const allTagsInRecipe = tagValueAppareil.every((tag) =>
-//       Appareil.includes(tag)
-//     );
-//     console.log("tagValueAppareil.length ", tagValueAppareil.length);
+  // Clear the existing list of ingredients
+  const ingredientChoix = document.getElementById("list_Appareil");
+  ingredientChoix.innerHTML = "";
 
-//     if (allTagsRemoved || allTagsInRecipe) {
-//       cadre.style.display = "block"; // Affiche le cadre de recette
-//     } else {
-//       cadre.style.display = "none"; // Masque le cadre de recette
-//     }
-//   });
+  // Display the new list without duplicates
+  uniqueIngredientElements.forEach((element) => {
+    ingredientChoix.insertAdjacentHTML(
+      "beforeEnd",
+      ListItem("Appareils", element)
+    );
+  });
 
-//   // Si aucun tag n'a été supprimé, conserve l'état précédent de l'affichage
-//   if (!allTagsRemoved) {
-//     updateAppareilList();
-//   }
-// }
-
-// // /**
-// //  * @return[Ingedients List]
-// //  */
-// function updateAppareilList() {
-//   waitForAppareil().then((AppareilElements) => {
-//     const uniqueAppareil = new Set();
-//     AppareilElements.forEach((element) => {
-//       uniqueAppareil.add(element.textContent);
-//     });
-//     // Créez une nouvelle liste sans doublons à partir de l'ensemble
-//     const uniqueAppareilElements = Array.from(uniqueAppareil);
-//     // Supprimez  tout les éléments  de la liste des ingrédients
-//     const AppareilChoix = document.getElementById("list_Appareil");
-//     AppareilChoix.innerHTML = "";
-//     // Affichez la nouvelle liste sans doublons
-//     uniqueAppareilElements.forEach((element) => {
-//       const ListAppareil = ` <li
-//         class="Ustensiles  text-sm font-Manrope font-normal hover:bg-yellow-500 mb-2 py-4 pl-[18px] text-transform: capitalize" >
-//           <button value="${element}" class="ListAppareilBtn ">  ${element} </button>
-//         </li>`;
-//       AppareilChoix.insertAdjacentHTML("beforeEnd", ListAppareil);
-//     });
-//     initializeAppareilButtons();
-//   });
-// }
+  // Initialize buttons or perform any other necessary actions
+  initializeButtons(
+    ".Appareils",
+    "tagAppareils",
+    "closeAppareils",
+    "data-tag-value-Appareils"
+  );
+}
