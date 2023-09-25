@@ -17,14 +17,15 @@ async function processRecipes() {
   dataArray.forEach((data) => {
     const cadre = card(data);
     cadreCount++;
-    document.getElementById("cards").insertAdjacentHTML("afterbegin", cadre);
+    pageObject.cadre().insertAdjacentHTML("afterbegin", cadre);
   });
   numbreOfCard();
 }
 
 function numbreOfCard() {
-  const sectionFiltre = document.getElementById("sectionFiltre");
-  sectionFiltre.insertAdjacentHTML("beforeend", rendreCardCount(cadreCount));
+  pageObject
+    .sectionFiltre()
+    .insertAdjacentHTML("beforeend", rendreCardCount(cadreCount));
 }
 processRecipes();
 fetchData();
@@ -35,8 +36,10 @@ function updateNumberOfCards() {
     ".cadre[style='display: block;']"
   );
   const numberOfVisibleCadres = visibleCadres.length;
-  const sectionFiltre = document.getElementById("cardesNumber");
-  sectionFiltre.innerHTML = rendreCardCount(numberOfVisibleCadres);
+
+  pageObject.sectionFiltreNumber().innerHTML = rendreCardCount(
+    numberOfVisibleCadres
+  );
 }
 
 //////////////////recherche////////////
@@ -46,6 +49,7 @@ searchValue.addEventListener("input", function () {
   const cadresRecettes = document.querySelectorAll(".cadre");
   cadresRecettes.forEach((cadre) => {
     const titre = cadre.querySelector(".titlesCadre").textContent.toLowerCase();
+
     const description = cadre
       .querySelector(".descriptionCadre")
       .textContent.toLowerCase();
@@ -68,25 +72,9 @@ searchValue.addEventListener("input", function () {
       }
     } else {
       cadre.style.display = "block";
-      //   localStorage.removeItem("searchValue");
-      //   console.log("jai enlver de locale");
-      //   // Mettez à jour elementValues en retirant la valeur de recherche
-      //   elementValues = elementValues.filter(
-      //     (value) => value === valeurDeRecherche
-      //   );
-      //   console.log("je suprime ici ", elementValues);
-      //   //ici jai un probleme
-      //   // updateElementValuesFromLocalStorage()
-      //   const tagElements = document.querySelectorAll(".tagElement");
-      //   if (tagElements.length === 0) {
-      //     cadre.style.display = "block"; // Affiche le cadre de recette
-      //   } else {
-      //     initializeButtons(ElementTag, tag, closeTag, dataValue);
-      //   }
-      // }
     }
   });
-  // updateAppareilList();
+
   updateNumberOfCards();
   updateIngredientsList();
   updateAppareilList();
@@ -96,9 +84,3 @@ searchValue.addEventListener("input", function () {
 BtnSearche.addEventListener("click", (e) => {
   e.preventDefault();
 });
-
-// Supprimer les données du localStorage avant le rafraîchissement de la page
-// window.addEventListener("beforeunload", () => {
-//   const valeurDeRecherche = searchValue.value.toLowerCase();
-//   localStorage.removeItem("searchValue");
-// });

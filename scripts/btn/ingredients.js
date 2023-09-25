@@ -29,9 +29,7 @@ initializeButtons(
 );
 
 function closeBtnTagIngredient() {
-  const tagElements = document.querySelectorAll(".tagIngredients");
-
-  tagElements.forEach((tagElement) => {
+  pageObject.tagElements().forEach((tagElement) => {
     const btnCloseTag = tagElement.querySelector(".closeTagIngredients");
     const tagValueToRemove = btnCloseTag.getAttribute("data-value-Ingredients");
     console.log("Tag to remove:", tagValueToRemove);
@@ -62,12 +60,9 @@ function closeBtnTagIngredient() {
  * @return[Ingedients List]
  */
 function updateIngredientsList() {
-  const visibleCadres = document.querySelectorAll(
-    ".cadre[style='display: block;']"
-  );
   const elements = [];
 
-  visibleCadres.forEach((cadre) => {
+  pageObject.visibleCadres().forEach((cadre) => {
     const elementsInCadre = cadre.querySelectorAll(".ingredientElement");
     elements.push(...elementsInCadre);
   });
@@ -81,15 +76,13 @@ function updateIngredientsList() {
   const uniqueIngredientElements = Array.from(uniqueIngredients);
 
   // Clear the existing list of ingredients
-  const ingredientChoix = document.getElementById("list_ingredient");
-  ingredientChoix.innerHTML = "";
+  pageObject.ingredientChoix().innerHTML = "";
 
   // Display the new list without duplicates
   uniqueIngredientElements.forEach((element) => {
-    ingredientChoix.insertAdjacentHTML(
-      "beforeEnd",
-      ListItem("Ingredients", element)
-    );
+    pageObject
+      .ingredientChoix()
+      .insertAdjacentHTML("beforeEnd", ListItem("Ingredients", element));
   });
 
   // Initialize buttons or perform any other necessary actions

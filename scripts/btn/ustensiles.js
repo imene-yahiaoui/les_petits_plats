@@ -27,12 +27,8 @@ initializeButtons(
   "data-tag-value-Ustensile"
 );
 
-//  closeBtnTag(".tagUstensile", ".closeTagUstensile", "data-tag-value-Ustensile");
-
 function closeBtnTagUstensile() {
-  const tagElements = document.querySelectorAll(".tagUstensile");
-
-  tagElements.forEach((tagElement) => {
+  pageObject.tagElementsUstensile().forEach((tagElement) => {
     const btnCloseTag = tagElement.querySelector(".closeTagUstensile");
     const tagValueToRemove = btnCloseTag.getAttribute(
       "data-tag-value-Ustensile"
@@ -47,7 +43,7 @@ function closeBtnTagUstensile() {
       elementValues = elementValues.filter(
         (value) => value !== tagValueToRemove
       );
-      updateUstensileList()
+      updateUstensileList();
       if (elementValues.length === 0) {
         searchWithTags([]);
       } else {
@@ -62,12 +58,9 @@ function closeBtnTagUstensile() {
  * @return[Ingedients List]
  */
 function updateUstensileList() {
-  const visibleCadres = document.querySelectorAll(
-    ".cadre[style='display: block;']"
-  );
   const elements = [];
 
-  visibleCadres.forEach((cadre) => {
+  pageObject.visibleCadres().forEach((cadre) => {
     const elementsInCadre = cadre.querySelectorAll(".Ustensile");
     elements.push(...elementsInCadre);
   });
@@ -81,15 +74,13 @@ function updateUstensileList() {
   const uniqueIngredientElements = Array.from(uniqueIngredients);
 
   // Clear the existing list of ingredients
-  const ingredientChoix = document.getElementById("list_Ustensiles");
-  ingredientChoix.innerHTML = "";
+  pageObject.ingredientChoixUstensile().innerHTML = "";
 
   // Display the new list without duplicates
   uniqueIngredientElements.forEach((element) => {
-    ingredientChoix.insertAdjacentHTML(
-      "beforeEnd",
-      ListItem("Ustensiles", element)
-    );
+    pageObject
+      .ingredientChoixUstensile()
+      .insertAdjacentHTML("beforeEnd", ListItem("Ustensiles", element));
   });
 
   // Initialize buttons or perform any other necessary actions

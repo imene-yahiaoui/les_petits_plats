@@ -27,9 +27,7 @@ initializeButtons(
 );
 
 function closeBtnTagAppareil() {
-  const tagElements = document.querySelectorAll(".tagAppareils");
-
-  tagElements.forEach((tagElement) => {
+  pageObject.tagElementsAppareils().forEach((tagElement) => {
     const btnCloseTag = tagElement.querySelector(".closeAppareils");
     const tagValueToRemove = btnCloseTag.getAttribute(
       "data-tag-value-Appareils"
@@ -61,12 +59,9 @@ function closeBtnTagAppareil() {
  * @return[Ingedients List]
  */
 function updateAppareilList() {
-  const visibleCadres = document.querySelectorAll(
-    ".cadre[style='display: block;']"
-  );
   const elements = [];
 
-  visibleCadres.forEach((cadre) => {
+  pageObject.visibleCadres().forEach((cadre) => {
     const elementsInCadre = cadre.querySelectorAll(".appareil");
     elements.push(...elementsInCadre);
   });
@@ -80,15 +75,13 @@ function updateAppareilList() {
   const uniqueIngredientElements = Array.from(uniqueIngredients);
 
   // Clear the existing list of ingredients
-  const ingredientChoix = document.getElementById("list_Appareil");
-  ingredientChoix.innerHTML = "";
+  pageObject.ingredientChoixAppareils().innerHTML = "";
 
   // Display the new list without duplicates
   uniqueIngredientElements.forEach((element) => {
-    ingredientChoix.insertAdjacentHTML(
-      "beforeEnd",
-      ListItem("Appareils", element)
-    );
+    pageObject
+      .ingredientChoixAppareils()
+      .insertAdjacentHTML("beforeEnd", ListItem("Appareils", element));
   });
 
   // Initialize buttons or perform any other necessary actions

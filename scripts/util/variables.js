@@ -6,3 +6,17 @@ const titlesCadre = document.querySelectorAll(".titlesCadre");
 const ingredientsCard = document.querySelectorAll(".ingredientsCard");
 const descriptionCadre = document.querySelectorAll(".descriptionCadre");
 const BtnSearche = document.getElementById("searcheBtn");
+
+const pageObject = {
+  cadre: () => document.getElementById("cards"),
+  sectionFiltre: () => document.getElementById("sectionFiltre"),
+  sectionFiltreNumber: () => document.getElementById("cardesNumber"),
+  tagElements: () => document.querySelectorAll(".tagIngredients"),
+  visibleCadres: () =>
+    document.querySelectorAll(".cadre[style='display: block;']"),
+  ingredientChoix: () => document.getElementById("list_ingredient"),
+  tagElementsAppareils: () => document.querySelectorAll(".tagAppareils"),
+  ingredientChoixAppareils: () => document.getElementById("list_Appareil"),
+  tagElementsUstensile: () => document.querySelectorAll(".tagUstensile"),
+  ingredientChoixUstensile: () => document.getElementById("list_Ustensiles"),
+};

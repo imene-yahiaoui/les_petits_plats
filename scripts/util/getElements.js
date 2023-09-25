@@ -8,8 +8,7 @@ function waitForElements(
   ElementTag,
   tag,
   closeTag,
-  dataValue,
-  
+  dataValue
 ) {
   return new Promise((resolve) => {
     const checkElements = () => {
@@ -31,9 +30,7 @@ function waitForElements(
     };
 
     checkElements();
-  })
-  
-  .then((elements) => {
+  }).then((elements) => {
     const uniqueElements = new Set();
     elements.forEach((element) => {
       uniqueElements.add(element.textContent);
@@ -46,7 +43,6 @@ function waitForElements(
       list.insertAdjacentHTML("beforeEnd", ListItem(typeElement, element));
     });
     initializeButtons(ElementTag, tag, closeTag, dataValue);
-    
   });
 }
 
@@ -95,7 +91,6 @@ function initializeButtons(ElementTag, tag, closeTag, dataValue) {
       const valueBtn = button.textContent.trim();
       elementValues.push(valueBtn);
       console.log("Tags :", elementValues);
-    
 
       tagSection.insertAdjacentHTML(
         "beforeEnd",
@@ -103,24 +98,17 @@ function initializeButtons(ElementTag, tag, closeTag, dataValue) {
       );
       closeBtnTagAppareil(valueBtn);
       closeBtnTagIngredient(valueBtn);
-      closeBtnTagUstensile(valueBtn)
+      closeBtnTagUstensile(valueBtn);
       searchWithTags(elementValues);
-    
+
       updateNumberOfCards();
     });
   });
 }
 
-
-
 // /**
 //  * @return[ searche whith tags]
 //  */
-// //if input est la
-
-// const searchValue = document.getElementById("searche");
-// const valeurDeRecherche = searchValue.value.toLowerCase();
-
 function searchWithTags(tagValues) {
   const tagValue = tagValues.map((value) => value.toLowerCase());
   const cadresRecettes = document.querySelectorAll(".cadre");
@@ -140,7 +128,7 @@ function searchWithTags(tagValues) {
     const Ustensiles = cadre
       .querySelector(".Ustensiles")
       .textContent.toLowerCase();
-
+///////
     const allTagsInRecipe = tagValue.every(
       (tag) =>
         titre.includes(tag) ||
@@ -149,7 +137,7 @@ function searchWithTags(tagValues) {
         Appareil.includes(tag) ||
         Ustensiles.includes(tag)
     );
- 
+
     if (allTagsRemoved || allTagsInRecipe) {
       cadre.style.display = "block"; // Affiche le cadre de recette
     } else {
@@ -164,6 +152,3 @@ function searchWithTags(tagValues) {
     updateUstensileList();
   }
 }
- 
-
- 
