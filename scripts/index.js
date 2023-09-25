@@ -4,12 +4,6 @@
  */
 let cadreCount = 0;
 
-/**
- * @return[data]
- * @return[reverse.dataArray]
- *  @return[dataArrayLength]
- */
-
 async function processRecipes() {
   const dataArray = await fetchData();
 
@@ -17,25 +11,24 @@ async function processRecipes() {
   dataArray.forEach((data) => {
     const cadre = card(data);
     cadreCount++;
-    pageObject.cadre().insertAdjacentHTML("afterbegin", cadre);
+    // pageObject.cadre().insertAdjacentHTML("afterbegin", cadre);
+    pageObject.DisplayCard(cadre);
   });
   numbreOfCard();
 }
 
 function numbreOfCard() {
-  pageObject
-    .sectionFiltre()
-    .insertAdjacentHTML("beforeend", rendreCardCount(cadreCount));
+  // pageObject
+  //   .sectionFiltre()
+  //   .insertAdjacentHTML("beforeend", rendreCardCount(cadreCount));
+  pageObject.addCard(rendreCardCount(cadreCount));
 }
 processRecipes();
 fetchData();
 
 //metre a jour le numero de cardes
 function updateNumberOfCards() {
-  const visibleCadres = document.querySelectorAll(
-    ".cadre[style='display: block;']"
-  );
-  const numberOfVisibleCadres = visibleCadres.length;
+  const numberOfVisibleCadres = pageObject.visibleCadres().length;
 
   pageObject.sectionFiltreNumber().innerHTML = rendreCardCount(
     numberOfVisibleCadres

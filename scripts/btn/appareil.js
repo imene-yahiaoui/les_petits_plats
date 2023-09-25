@@ -6,8 +6,8 @@ const AppareilFilterSection = createFilterSection(
   "searchApparei",
   "list_Appareil"
 );
-
-sectionOption.insertAdjacentHTML("beforeend", AppareilFilterSection);
+pageObject.DisplaySection(AppareilFilterSection)
+ 
 waitForElements(
   ".appareil",
   "list_Appareil",

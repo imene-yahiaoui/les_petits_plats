@@ -7,7 +7,7 @@ const ustensilesFilterSection = createFilterSection(
   "list_Ustensiles"
 );
 
-sectionOption.insertAdjacentHTML("beforeend", ustensilesFilterSection);
+pageObject.DisplaySection(ustensilesFilterSection);
 
 waitForElements(
   ".Ustensile",

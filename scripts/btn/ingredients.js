@@ -6,8 +6,7 @@ const ingredientsFilterSection = createFilterSection(
   "searchIngredient",
   "list_ingredient"
 );
-
-sectionOption.insertAdjacentHTML("afterbegin", ingredientsFilterSection);
+pageObject.DisplaySection(ingredientsFilterSection);
 
 waitForElements(
   ".ingredientElement",
