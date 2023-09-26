@@ -111,6 +111,7 @@ function initializeButtons(ElementTag, tag, closeTag, dataValue) {
 //  */
 function searchWithTags(tagValues) {
   const tagValue = tagValues.map((value) => value.toLowerCase());
+  
   const cadresRecettes = document.querySelectorAll(".cadre");
   // Vérifie si tous les tags ont été supprimés
   console.log("tagValue.length 1 ", tagValue.length);
@@ -128,8 +129,7 @@ function searchWithTags(tagValues) {
     const Ustensiles = cadre
       .querySelector(".Ustensiles")
       .textContent.toLowerCase();
-///////
-    const allTagsInRecipe = tagValue.every(
+     const allTagsInRecipe = tagValue.every(
       (tag) =>
         titre.includes(tag) ||
         description.includes(tag) ||
@@ -152,3 +152,6 @@ function searchWithTags(tagValues) {
     updateUstensileList();
   }
 }
+
+
+ 

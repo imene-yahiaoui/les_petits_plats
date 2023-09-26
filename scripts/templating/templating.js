@@ -16,7 +16,8 @@ function card(data) {
     time,
     id,
     appliance,
-    ustensils,
+    ustensils
+     
   } = data;
   const picture = `./assets/images/${image}`;
 
@@ -57,7 +58,7 @@ function card(data) {
   }
   const cadre = `
       <figure class="cadre  w-[380px] h-[731] bg-white rounded-3xl  " id="${id}" style='display: block;'>  
-      <div class="h-[253px] w-full rounded-3xl">
+      <div class="h-[253px] w-full rounded-3xl" >
       <img  class="h-full w-full object-cover rounded-3xl rounded-b-lg" src="${picture}" alt="recette de ${name}">
       <p class="relative w-[80px] bg-yellow-500  text-center h-7 rounded-3xl 	top-[-232px]  left-[291px]"> ${time} min </p>
       </div>

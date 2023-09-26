@@ -2,30 +2,29 @@
  * @return[data]
  *
  */
+
+const originalCadres = [];
 let cadreCount = 0;
 
 async function processRecipes() {
   const dataArray = await fetchData();
-
   dataArray.reverse();
   dataArray.forEach((data) => {
     const cadre = card(data);
     cadreCount++;
-    // pageObject.cadre().insertAdjacentHTML("afterbegin", cadre);
     pageObject.DisplayCard(cadre);
+    originalCadres.push(cadre);
+    
   });
   numbreOfCard();
 }
 
 function numbreOfCard() {
-  // pageObject
-  //   .sectionFiltre()
-  //   .insertAdjacentHTML("beforeend", rendreCardCount(cadreCount));
   pageObject.addCard(rendreCardCount(cadreCount));
 }
 processRecipes();
 fetchData();
-
+let originalId = pageObject.cadre().getAttribute("data-id");
 //metre a jour le numero de cardes
 function updateNumberOfCards() {
   const numberOfVisibleCadres = pageObject.visibleCadres().length;
@@ -38,8 +37,8 @@ function updateNumberOfCards() {
 //////////////////recherche////////////
 searchValue.addEventListener("input", function () {
   const valeurDeRecherche = searchValue.value.toLowerCase();
-  // Parcours les cadres de recette pour trouver correspondances
-  const cadresRecettes = document.querySelectorAll(".cadre");
+  // const cadresRecettes = document.querySelectorAll(".cadre");
+  const cadresRecettes =pageObject.visibleCadres()
   cadresRecettes.forEach((cadre) => {
     const titre = cadre.querySelector(".titlesCadre").textContent.toLowerCase();
 
@@ -52,21 +51,27 @@ searchValue.addEventListener("input", function () {
 
     // Vérifie si la valeur de recherche est présente dans le titre, la description ou les ingrédients
     if (valeurDeRecherche.length > 2) {
-      // Stocker la valeur de recherche dans le localStorage
-      // localStorage.setItem("searchValue", valeurDeRecherche);
       if (
         titre.includes(valeurDeRecherche) ||
         description.includes(valeurDeRecherche) ||
         ingredients.includes(valeurDeRecherche)
-      ) {
-        cadre.style.display = "block"; // Affiche le cadre de recette
-      } else {
-        cadre.style.display = "none"; // Masque le cadre de recette
-      }
+        ) {
+          // cadre.style.display = "block"
     } else {
-      cadre.style.display = "block";
-    }
-  });
+          cadre.remove();
+        
+        }}
+  
+  else {
+        pageObject.cadre().innerHTML ="";
+        originalCadres.forEach((cadre)=>{
+          pageObject.DisplayCard(cadre)
+        })
+         
+       
+      }
+    });
+ 
 
   updateNumberOfCards();
   updateIngredientsList();

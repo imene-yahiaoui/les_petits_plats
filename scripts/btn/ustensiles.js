@@ -50,6 +50,7 @@ function closeBtnTagUstensile() {
         searchWithTags(elementValues);
       }
       updateNumberOfCards();
+
     });
   });
 }
