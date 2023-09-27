@@ -6,6 +6,7 @@ const titlesCadre = document.querySelectorAll(".titlesCadre");
 const ingredientsCard = document.querySelectorAll(".ingredientsCard");
 const descriptionCadre = document.querySelectorAll(".descriptionCadre");
 const BtnSearche = document.getElementById("searcheBtn");
+const main = document.getElementById("main");
 
 const pageObject = {
   cadre: () => document.getElementById("cards"),
@@ -24,6 +25,5 @@ const pageObject = {
   ingredientChoixUstensile: () => document.getElementById("list_Ustensiles"),
   DisplaySection:(Section)=>sectionOption.insertAdjacentHTML("beforeend",  Section),
  
-
 
 };

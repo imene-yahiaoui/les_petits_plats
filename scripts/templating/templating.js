@@ -138,3 +138,8 @@ function Tag(tag, closeTag, dataValue, valueBtn) {
    <button class="font-bold ${closeTag}" ${dataValue}="${valueBtn}"> <i class="fa-solid fa-x"></i> </button>
   </li>`;
 }
+
+function NoMatchCard(value) {
+  return`<p id="NoMatchview" class="font-anton text-lg font-normal w-full py-10  bg-gray-200 pl-[60px]">  Aucune recette ne contient ‘${value} ’ vous pouvez chercher «
+  tarte aux pommes », « poisson », etc. </p>`
+}
