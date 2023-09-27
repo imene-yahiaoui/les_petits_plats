@@ -39,9 +39,17 @@ searchValue.addEventListener("input", SeracheWithInput);
 
 function SeracheWithInput() {
   const valeurDeRecherche = searchValue.value.toLowerCase();
-  // const cadresRecettes = document.querySelectorAll(".cadre");
+  performSearch(valeurDeRecherche);
+}
+
+function performSearch(valeurDeRecherche) {
+  const existingNoMatchMessage = document.getElementById("NoMatchview");
   const cadresRecettes = pageObject.visibleCadres();
   const matchCadres = [];
+  if (existingNoMatchMessage) {
+    existingNoMatchMessage.remove();
+  }
+console.log('tagSection.length',tagSection.length)
   cadresRecettes.forEach((cadre) => {
     const titre = cadre.querySelector(".titlesCadre").textContent.toLowerCase();
 
@@ -51,7 +59,6 @@ function SeracheWithInput() {
     const ingredients = cadre
       .querySelector(".ingredientsCard")
       .textContent.toLowerCase();
-    console.log(valeurDeRecherche.length);
 
     if (
       titre.includes(valeurDeRecherche) ||
@@ -59,39 +66,26 @@ function SeracheWithInput() {
       ingredients.includes(valeurDeRecherche)
     ) {
       matchCadres.push(cadre);
-    }  
-console.log(valeurDeRecherche.length)
-    pageObject.cadre().innerHTML = "";
-    // if (valeurDeRecherche.length < 2 || valeurDeRecherche.length === 0) {
-    //   originalCadres.forEach((cadre) => {
-    //     pageObject.cadre().insertAdjacentHTML("afterbegin", cadre)
-     
-    //   });
-    //   // cadre.style.display = "block"
-    // } else
-    if(valeurDeRecherche.length > 2)
-    {
-      matchCadres.forEach((cadre) => {
-        pageObject.cadre().appendChild(cadre);
-      });
     }
-
-    
   });
-  if( valeurDeRecherche.length > 2 && matchCadres.length === 0){
-    console.log('le resu est 0')
-    const existingNoMatchMessage = document.getElementById("NoMatchview");
-if (existingNoMatchMessage){
-  existingNoMatchMessage.remove();
-}
-   
-  main.insertAdjacentHTML("afterend", NoMatchCard(valeurDeRecherche))
-  }
-  if(valeurDeRecherche.length <= 2 ){
+  pageObject.cadre().innerHTML = "";
+  if (valeurDeRecherche.length > 2) {
+    matchCadres.forEach((cadre) => {
+      pageObject.cadre().appendChild(cadre);
+    });
+  } else if (valeurDeRecherche.length <= 2 ) {
+    
     originalCadres.forEach((cadre) => {
-    pageObject.DisplayCard(cadre);
-    })
+      pageObject.DisplayCard(cadre);
+    });
   }
+
+  if (valeurDeRecherche.length > 2 && matchCadres.length === 0) {
+    console.log("le resu est 0", valeurDeRecherche.length);
+    searchValue.value = "";
+     main.insertAdjacentHTML("afterend", NoMatchCard(valeurDeRecherche));
+  }
+
   updateNumberOfCards();
   updateIngredientsList();
   updateAppareilList();
