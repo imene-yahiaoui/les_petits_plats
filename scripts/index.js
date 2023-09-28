@@ -85,6 +85,7 @@ function performSearch(valeurDeRecherche) {
   if (valeurDeRecherche.length <= 2) {
     if (existingTag) {
       elementValues = [];
+      tagSection.innerHTML = "";
     }
     originalCadres.forEach((cadre) => {
       pageObject.DisplayCard(cadre);
