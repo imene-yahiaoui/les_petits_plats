@@ -13,7 +13,7 @@ const pageObject = {
   sectionFiltreNumber: () => document.getElementById("cardesNumber"),
   tagElements: () => document.querySelectorAll(".tagIngredients"),
   visibleCadres: () =>document.querySelectorAll(".cadre[style='display: block;']"),
-  DisplayCard:(card)=> pageObject.cadre().insertAdjacentHTML("afterbegin", card),
+  DisplayCard:(card)=> pageObject.cadre().insertAdjacentHTML("beforeend", card),
   addCard: (cardContent) =>
     pageObject.sectionFiltre().insertAdjacentHTML("beforeend", cardContent),
 
