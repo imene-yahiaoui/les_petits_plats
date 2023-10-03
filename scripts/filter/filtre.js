@@ -1,33 +1,4 @@
-searchValue.addEventListener("input", SearchWithInput);
-function SearchWithInput() {
-  //   matchCadres.length = 0;
-  console.log("la taille de la list ", elementValues);
-  performSearch(elementValues);
-}
 
-function performSearch(tagValues) {
-  const tagValue = tagValues.map((value) => value.toLowerCase());
-  const valeurDeRecherche = searchValue.value.toLowerCase();
-  const existingNoMatchMessage = document.getElementById("NoMatchview");
-
-  // Supprimer un message existant s'il y en a
-  if (existingNoMatchMessage) {
-    existingNoMatchMessage.remove();
-  }
-  const matchCadres = [];
-
-  filtre(valeurDeRecherche, matchCadres, listFiltre, tagValue);
-  // Effacer le contenu actuel de l'affichage des cadres
-  pageObject.cadre().innerHTML = "";
-  MatchCadre(valeurDeRecherche, matchCadres);
-  filterAndDisplayCadres(valeurDeRecherche);
-  NoMatchCardes(valeurDeRecherche, matchCadres);
-
-  updateNumberOfCards();
-  updateIngredientsList();
-  updateAppareilList();
-  updateUstensileList();
-}
 function filtre(
   valeurDeRecherche,
   matchCadres,
