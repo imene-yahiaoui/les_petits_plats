@@ -23,8 +23,9 @@ function card(data) {
 
   // Créer une liste d'ingrédients en parcourant le tableau d'ingrédients
   const ingredientsList = ingredients
-    .map(
-      (ingr) => `
+  ? ingredients
+      .map(
+        (ingr) => `
    <li>
      <p class="ingredientElement">${ingr.ingredient}</p>
      ${
@@ -37,7 +38,7 @@ function card(data) {
    </li>
   `
     )
-    .join("");
+    .join(""):"";
 
   const maxLength = 180;
 

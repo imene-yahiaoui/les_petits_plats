@@ -6,8 +6,8 @@ const AppareilFilterSection = createFilterSection(
   "searchApparei",
   "list_Appareil"
 );
-pageObject.DisplaySection(AppareilFilterSection)
- 
+pageObject.DisplaySection(AppareilFilterSection);
+
 waitForElements(
   ".appareil",
   "list_Appareil",

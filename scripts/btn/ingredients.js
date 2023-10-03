@@ -33,7 +33,6 @@ function closeBtnTagIngredient() {
     const tagValueToRemove = btnCloseTag.getAttribute("data-value-Ingredients");
     console.log("Tag to remove:", tagValueToRemove);
     btnCloseTag.addEventListener("click", function () {
-      console.log("je entend le click");
       console.log("Tag to remove:", tagValueToRemove);
       tagElement.remove();
 
@@ -41,10 +40,7 @@ function closeBtnTagIngredient() {
       elementValues = elementValues.filter(
         (value) => value !== tagValueToRemove
       );
-
       updateIngredientsList();
-
-      //  Vérifie s'il ne reste plus aucun tag, puis affiche toutes les recettes
       if (elementValues.length === 0) {
         searchWithTags([]);
       } else {

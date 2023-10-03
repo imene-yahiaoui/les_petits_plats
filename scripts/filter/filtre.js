@@ -1,28 +1,26 @@
 searchValue.addEventListener("input", SearchWithInput);
 function SearchWithInput() {
-  const valeurDeRecherche = searchValue.value.toLowerCase();
   //   matchCadres.length = 0;
-
-  performSearch(valeurDeRecherche);
+  console.log("la taille de la list ", elementValues);
+  performSearch(elementValues);
 }
-/**
- * @param[valeurDeRecherche]
- * @return[matchCadres]
- */
-function performSearch(valeurDeRecherche) {
+
+function performSearch(tagValues) {
+  const tagValue = tagValues.map((value) => value.toLowerCase());
+  const valeurDeRecherche = searchValue.value.toLowerCase();
   const existingNoMatchMessage = document.getElementById("NoMatchview");
-  const existingTag = document.getElementById("tags");
 
   // Supprimer un message existant s'il y en a
   if (existingNoMatchMessage) {
     existingNoMatchMessage.remove();
   }
   const matchCadres = [];
-  filtre(valeurDeRecherche, matchCadres);
+
+  filtre(valeurDeRecherche, matchCadres, listFiltre, tagValue);
   // Effacer le contenu actuel de l'affichage des cadres
   pageObject.cadre().innerHTML = "";
   MatchCadre(valeurDeRecherche, matchCadres);
-  filterAndDisplayCadres(valeurDeRecherche,existingTag);
+  filterAndDisplayCadres(valeurDeRecherche);
   NoMatchCardes(valeurDeRecherche, matchCadres);
 
   updateNumberOfCards();
@@ -30,59 +28,118 @@ function performSearch(valeurDeRecherche) {
   updateAppareilList();
   updateUstensileList();
 }
-
-function filtre(valeurDeRecherche, matchCadres) {
-  console.log(valeurDeRecherche);
-  matchCadres.length = 0;
-  console.log(listFiltre.length);
-  console.log(listFiltre);
+function filtre(
+  valeurDeRecherche,
+  matchCadres,
+  listFiltre,
+  tagValue,
+  elementValues
+) {
+  console.log("valeurDeRecherche", valeurDeRecherche);
+  console.log("La fonction a été appelée avec tagValue.", elementValues);
 
   listFiltre.forEach((cadre) => {
-    const titre = cadre.name; // Assurez-vous que la propriété name existe dans votre objet cadre
-    const description = cadre.description; // Assurez-vous que la propriété description existe dans votre objet cadre
-    const ingredients = cadre.ingredients.map((ingr) => ingr.ingredient); // Assurez-vous que la propriété ingredients existe dans votre objet cadre et qu'elle est un tableau
+    const titre = cadre.name.toLowerCase();
+    const description = cadre.description.toLowerCase();
+    const ingredients = cadre.ingredients;
+    const Appareil = cadre.appliance.toLowerCase();
+    const ustensils = cadre.ustensils;
+    const valeurDeRechercheLowerCase = valeurDeRecherche.toLowerCase();
+    const valeurDeRechercheInTitle = titre.includes(valeurDeRechercheLowerCase);
+    const valeurDeRechercheInDescription = description.includes(
+      valeurDeRechercheLowerCase
+    );
 
-    if (
-      titre.toLowerCase().includes(valeurDeRecherche) ||
-      description.toLowerCase().includes(valeurDeRecherche) ||
-      ingredients.some((ingr) => ingr.toLowerCase().includes(valeurDeRecherche))
+    const valeurDeRechercheInIngredients =
+      ingredients &&
+      ingredients.some((ingr) =>
+        ingr.ingredient.toLowerCase().includes(valeurDeRechercheLowerCase)
+      );
+
+    const containsValue =
+      valeurDeRechercheInTitle ||
+      valeurDeRechercheInDescription ||
+      valeurDeRechercheInIngredients;
+
+    const allTagsInRecipe = tagValue?.every(
+      (tag) =>
+        titre.includes(tag) ||
+        description.includes(tag) ||
+        (ingredients &&
+          ingredients?.some((ingr) =>
+            ingr.ingredient.toLowerCase().includes(tag)
+          )) ||
+        Appareil.includes(tag) ||
+        (ustensils &&
+          ustensils?.some((ustensil) => ustensil.toLowerCase().includes(tag)))
+    );
+    console.log("///////////////////containsValue", containsValue);
+    if (valeurDeRecherche.length > 2) {
+      //si ya pas tag
+      if (tagValue.length === 0) {
+        if (containsValue) {
+          matchCadres.push(cadre);
+        }
+        //si il ya tag
+      } else {
+        if (containsValue && allTagsInRecipe) {
+          matchCadres.push(cadre);
+        }
+      }
+    } else if (
+      !valeurDeRecherche ||
+      (valeurDeRecherche.length <= 2 && tagValue?.length > 0)
     ) {
-      matchCadres.push(cadre);
+      console.log("la je suis dans valure0 et il ya un tag");
+      if (allTagsInRecipe) {
+        console.log("je confirme  il ya un tag");
+        matchCadres.push(cadre);
+      }
     }
   });
+
+  console.log("matchCadres:", matchCadres);
+}
+
+function filterAndDisplayCadres(valeurDeRecherche) {
+  if (valeurDeRecherche.length <= 2 && elementValues.length === 0) {
+    // Effacez le contenu actuel de l'affichage des cadres
+    pageObject.cadre().innerHTML = "";
+
+    originalCadres.forEach((cadre) => {
+      // const cadreElement = card(cadre);
+      pageObject.DisplayCard(cadre);
+    });
+  }
 }
 
 // Filtrer les cadres en fonction de la valeur de recherche si elle est plus de 2  caractères
 function MatchCadre(valeurDeRecherche, matchCadres) {
-  if (valeurDeRecherche.length > 2) {
+  if (valeurDeRecherche.length > 2 || elementValues.length > 0) {
+    const uniqueIds = new Set();
+    // Filtrer les cadres en fonction de l'ID unique
+    const filteredCadres = matchCadres.filter((recipe) => {
+      const id = recipe.id;
+      if (!uniqueIds.has(id)) {
+        uniqueIds.add(id);
+        return true;
+      }
+      return false;
+    });
     console.log("matchCadre", matchCadres.length);
     console.log("matchCadre", matchCadres);
     // Effacez le contenu actuel de l'affichage des cadres
     pageObject.cadre().innerHTML = "";
 
-    matchCadres.forEach((recipe) => {
+    filteredCadres.forEach((recipe) => {
       const cadre = card(recipe);
       pageObject.DisplayCard(cadre);
     });
   }
 }
 
-// Gérer le cas où la valeur de recherche est courte (<= 2 caractères) il retourne la liste original
-function filterAndDisplayCadres(valeurDeRecherche,existingTag) {
-  if (valeurDeRecherche.length <= 2) {
-    if (existingTag) {
-      elementValues = [];
-      tagSection.innerHTML = "";
-    }
-    originalCadres.forEach((cadre) => {
-      pageObject.DisplayCard(cadre);
-    });
-  }
-}
-// Gérer le cas où aucun résultat n'est trouvé
 function NoMatchCardes(valeurDeRecherche, matchCadres) {
   if (valeurDeRecherche.length > 2 && matchCadres.length === 0) {
-    console.log("le resu est 0", valeurDeRecherche.length);
     main.insertAdjacentHTML("afterend", NoMatchCard(valeurDeRecherche));
   }
 }
