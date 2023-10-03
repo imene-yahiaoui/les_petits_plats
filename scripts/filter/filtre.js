@@ -40,7 +40,7 @@ function filtre(
         (ustensils &&
           ustensils?.some((ustensil) => ustensil.toLowerCase().includes(tag)))
     );
-    console.log("///////////////////containsValue", containsValue);
+
     if (valeurDeRecherche.length > 2) {
       //si ya pas tag
       if (tagValue.length === 0) {
@@ -57,15 +57,11 @@ function filtre(
       !valeurDeRecherche ||
       (valeurDeRecherche.length <= 2 && tagValue?.length > 0)
     ) {
-      console.log("la je suis dans valure0 et il ya un tag");
       if (allTagsInRecipe) {
-        console.log("je confirme  il ya un tag");
         matchCadres.push(cadre);
       }
     }
   });
-
-  console.log("matchCadres:", matchCadres);
 }
 //si la valure de rechreche moins de 2 caractères
 function filterAndDisplayCadres(valeurDeRecherche) {
@@ -93,8 +89,7 @@ function MatchCadre(valeurDeRecherche, matchCadres) {
       }
       return false;
     });
-    console.log("matchCadre", matchCadres.length);
-    console.log("matchCadre", matchCadres);
+
     // Effacez le contenu actuel de l'affichage des cadres
     pageObject.cadre().innerHTML = "";
     //l'affichage des cadres
@@ -105,9 +100,4 @@ function MatchCadre(valeurDeRecherche, matchCadres) {
   }
 }
 
-// L'affichage s'il n'y a pas de carte correspondant à la recherche
-function NoMatchCardes(valeurDeRecherche, matchCadres) {
-  if (valeurDeRecherche.length > 2 && matchCadres.length === 0) {
-    main.insertAdjacentHTML("afterend", NoMatchCard(valeurDeRecherche));
-  }
-}
+
