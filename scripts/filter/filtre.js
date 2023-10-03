@@ -1,11 +1,11 @@
 function filtre(
   valeurDeRecherche,
   matchCadres,
-  listFiltre,
+  listOfGlobalRecipe,
   tagValue,
   elementValues
 ) {
-  listFiltre.forEach((cadre) => {
+  listOfGlobalRecipe.forEach((cadre) => {
     const titre = cadre.name.toLowerCase();
     const description = cadre.description.toLowerCase();
     const ingredients = cadre.ingredients;

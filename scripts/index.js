@@ -5,13 +5,13 @@
  */
 
 const originalCadres = [];
-const listFiltre = [];
+const listOfGlobalRecipe = [];
 let cadreCount = 0;
 //recuper les card
 async function processRecipes() {
   const dataArray = await fetchData();
   dataArray.forEach((data) => {
-    listFiltre.push(data);
+    listOfGlobalRecipe.push(data);
     const cadre = card(data);
     cadreCount++;
     pageObject.DisplayCard(cadre);
@@ -56,7 +56,7 @@ function performSearch(tagValues) {
   }
   const matchCadres = [];
 
-  filtre(valeurDeRecherche, matchCadres, listFiltre, tagValue);
+  filtre(valeurDeRecherche, matchCadres, listOfGlobalRecipe, tagValue);
   // Effacer le contenu actuel de l'affichage des cadres
   pageObject.cadre().innerHTML = "";
   ///affiche les card
