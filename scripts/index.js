@@ -69,3 +69,9 @@ function performSearch(tagValues) {
   updateAppareilList();
   updateUstensileList();
 }
+// L'affichage s'il n'y a pas de carte correspondant à la recherche
+function NoMatchCardes(valeurDeRecherche, matchCadres) {
+  if (valeurDeRecherche.length > 2 && matchCadres.length === 0) {
+    main.insertAdjacentHTML("afterend", NoMatchCard(valeurDeRecherche));
+  }
+}

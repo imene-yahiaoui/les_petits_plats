@@ -64,7 +64,7 @@ function filtre(
     }
   }
 }
-
+//si la valure de rechreche moins de 2 caractères
 function filterAndDisplayCadres(valeurDeRecherche) {
   if (valeurDeRecherche.length <= 2 && elementValues.length === 0) {
     // Effacez le contenu actuel de l'affichage des cadres
@@ -102,8 +102,4 @@ function MatchCadre(valeurDeRecherche, matchCadres) {
   }
 }
 
-function NoMatchCardes(valeurDeRecherche, matchCadres) {
-  if (valeurDeRecherche.length > 2 && matchCadres.length === 0) {
-    main.insertAdjacentHTML("afterend", NoMatchCard(valeurDeRecherche));
-  }
-}
+
