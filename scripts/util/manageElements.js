@@ -61,7 +61,7 @@ function searcheInbtn(ElementId, Element) {
 
       if (valeur.length === 0) {
         Item.style.display = "block";
-      } else if (valeur.length > 2) {
+      } else if (valeur.length > 0) {
         if (
           ElementName.includes(valeur)
     
