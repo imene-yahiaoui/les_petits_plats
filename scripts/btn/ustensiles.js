@@ -33,10 +33,8 @@ function closeBtnTagUstensile() {
     const tagValueToRemove = btnCloseTag.getAttribute(
       "data-tag-value-Ustensile"
     );
-    console.log("Tag to remove:", tagValueToRemove);
+
     btnCloseTag.addEventListener("click", function () {
-      console.log("je entend le click");
-      console.log("Tag to remove:", tagValueToRemove);
       tagElement.remove();
 
       // Retirez la valeur du tag du tableau elementValues
@@ -50,7 +48,6 @@ function closeBtnTagUstensile() {
         searchWithTags(elementValues);
       }
       updateNumberOfCards();
-
     });
   });
 }
@@ -92,3 +89,8 @@ function updateUstensileList() {
     "data-tag-value-Ustensile"
   );
 }
+// Empêche le comportement par défaut du bouton
+const BtnsearchUstensiles = document.getElementById("searchUstensiles");
+BtnsearchUstensiles.addEventListener("click", (e) => {
+  e.preventDefault();
+});

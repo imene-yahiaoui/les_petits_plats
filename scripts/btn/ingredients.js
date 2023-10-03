@@ -31,9 +31,8 @@ function closeBtnTagIngredient() {
   pageObject.tagElements().forEach((tagElement) => {
     const btnCloseTag = tagElement.querySelector(".closeTagIngredients");
     const tagValueToRemove = btnCloseTag.getAttribute("data-value-Ingredients");
-    console.log("Tag to remove:", tagValueToRemove);
+
     btnCloseTag.addEventListener("click", function () {
-      console.log("Tag to remove:", tagValueToRemove);
       tagElement.remove();
 
       // Retirez la valeur du tag du tableau elementValues
@@ -88,3 +87,8 @@ function updateIngredientsList() {
     "data-value-Ingredients"
   );
 }
+// Empêche le comportement par défaut du bouton
+const BtnsearchIngredient = document.getElementById("searchIngredient");
+BtnsearchIngredient.addEventListener("click", (e) => {
+  e.preventDefault();
+});

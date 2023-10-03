@@ -33,7 +33,7 @@ function waitForElements(
   }).then((elements) => {
     const uniqueElements = new Set();
     elements.forEach((element) => {
-       uniqueElements.add(element.textContent.toLowerCase());
+      uniqueElements.add(element.textContent.toLowerCase());
     });
     // Créez une nouvelle liste sans doublons à partir de l'ensemble
     const uniqueElementList = Array.from(uniqueElements);
@@ -62,14 +62,10 @@ function searcheInbtn(ElementId, Element) {
       if (valeur.length === 0) {
         Item.style.display = "block";
       } else if (valeur.length > 0) {
-        if (
-          ElementName.includes(valeur)
-    
-        ) {
+        if (ElementName.includes(valeur)) {
           Item.style.display = "block";
-        
         } else {
-          Item.style.display = "none"; 
+          Item.style.display = "none";
         }
       } else {
         Item.style.display = "block";
@@ -90,8 +86,6 @@ function initializeButtons(ElementTag, tag, closeTag, dataValue) {
     button.addEventListener("click", function () {
       const valueBtn = button.textContent.trim();
       elementValues.push(valueBtn);
-      console.log("Tags :", elementValues);
-
       tagSection.insertAdjacentHTML(
         "beforeEnd",
         Tag(tag, closeTag, dataValue, valueBtn)
@@ -106,7 +100,5 @@ function initializeButtons(ElementTag, tag, closeTag, dataValue) {
   });
 }
 function searchWithTags(tagValues) {
-
   performSearch(tagValues);
 }
-

@@ -5,6 +5,7 @@ function filtre(
   tagValue,
   elementValues
 ) {
+ 
   for (let i = 0; i < listOfGlobalRecipe.length; i++) {
     const cadre = listOfGlobalRecipe[i];
     const titre = cadre.name.toLowerCase();

@@ -32,10 +32,8 @@ function closeBtnTagAppareil() {
     const tagValueToRemove = btnCloseTag.getAttribute(
       "data-tag-value-Appareils"
     );
-    console.log("Tag to remove:", tagValueToRemove);
+
     btnCloseTag.addEventListener("click", function () {
-      console.log("je entend le click");
-      console.log("Tag to remove:", tagValueToRemove);
       tagElement.remove();
 
       // Retirez la valeur du tag du tableau elementValues
@@ -92,3 +90,8 @@ function updateAppareilList() {
     "data-tag-value-Appareils"
   );
 }
+// Empêche le comportement par défaut du bouton
+const BtnsearchApparei = document.getElementById("searchApparei");
+BtnsearchApparei.addEventListener("click", (e) => {
+  e.preventDefault();
+});
