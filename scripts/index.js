@@ -38,10 +38,9 @@ function updateNumberOfCards() {
 BtnSearche.addEventListener("click", (e) => {
   e.preventDefault();
 });
-//functin dinput 
+//functin dinput
 searchValue.addEventListener("input", SearchWithInput);
 function SearchWithInput() {
- 
   console.log("la taille de la list ", elementValues);
   performSearch(elementValues);
 }
@@ -60,10 +59,10 @@ function performSearch(tagValues) {
   filtre(valeurDeRecherche, matchCadres, listFiltre, tagValue);
   // Effacer le contenu actuel de l'affichage des cadres
   pageObject.cadre().innerHTML = "";
-  ///affiche les card 
+  ///affiche les card
   MatchCadre(valeurDeRecherche, matchCadres);
   filterAndDisplayCadres(valeurDeRecherche);
-  //affiche msg derr 
+  //affiche msg derr
   NoMatchCardes(valeurDeRecherche, matchCadres);
 
   updateNumberOfCards();

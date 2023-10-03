@@ -1,4 +1,3 @@
-
 function filtre(
   valeurDeRecherche,
   matchCadres,
@@ -6,9 +5,6 @@ function filtre(
   tagValue,
   elementValues
 ) {
-  console.log("valeurDeRecherche", valeurDeRecherche);
-  console.log("La fonction a été appelée avec tagValue.", elementValues);
-
   listFiltre.forEach((cadre) => {
     const titre = cadre.name.toLowerCase();
     const description = cadre.description.toLowerCase();
@@ -26,12 +22,12 @@ function filtre(
       ingredients.some((ingr) =>
         ingr.ingredient.toLowerCase().includes(valeurDeRechercheLowerCase)
       );
-
+    // voir si il ya la valure dinput dans titre ou Description ou  Ingredients
     const containsValue =
       valeurDeRechercheInTitle ||
       valeurDeRechercheInDescription ||
       valeurDeRechercheInIngredients;
-
+    //voir si il ya tag dans titre ou Description ou  Ingredients ou Appareil ou ustensils
     const allTagsInRecipe = tagValue?.every(
       (tag) =>
         titre.includes(tag) ||
@@ -71,7 +67,7 @@ function filtre(
 
   console.log("matchCadres:", matchCadres);
 }
-
+//si la valure de rechreche moins de 2 caractères
 function filterAndDisplayCadres(valeurDeRecherche) {
   if (valeurDeRecherche.length <= 2 && elementValues.length === 0) {
     // Effacez le contenu actuel de l'affichage des cadres
@@ -101,7 +97,7 @@ function MatchCadre(valeurDeRecherche, matchCadres) {
     console.log("matchCadre", matchCadres);
     // Effacez le contenu actuel de l'affichage des cadres
     pageObject.cadre().innerHTML = "";
-
+    //l'affichage des cadres
     filteredCadres.forEach((recipe) => {
       const cadre = card(recipe);
       pageObject.DisplayCard(cadre);
@@ -109,6 +105,7 @@ function MatchCadre(valeurDeRecherche, matchCadres) {
   }
 }
 
+// L'affichage s'il n'y a pas de carte correspondant à la recherche
 function NoMatchCardes(valeurDeRecherche, matchCadres) {
   if (valeurDeRecherche.length > 2 && matchCadres.length === 0) {
     main.insertAdjacentHTML("afterend", NoMatchCard(valeurDeRecherche));
