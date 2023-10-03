@@ -92,3 +92,10 @@ function updateUstensileList() {
     "data-tag-value-Ustensile"
   );
 }
+
+// Empêche le comportement par défaut du bouton
+const BtnsearchUstensiles= document.getElementById( "searchUstensiles");
+BtnsearchUstensiles.addEventListener("click", (e) => {
+  e.preventDefault();
+});
+

@@ -12,8 +12,10 @@ const pageObject = {
   sectionFiltre: () => document.getElementById("sectionFiltre"),
   sectionFiltreNumber: () => document.getElementById("cardesNumber"),
   tagElements: () => document.querySelectorAll(".tagIngredients"),
-  visibleCadres: () =>document.querySelectorAll(".cadre[style='display: block;']"),
-  DisplayCard:(card)=> pageObject.cadre().insertAdjacentHTML("beforeend", card),
+  visibleCadres: () =>
+    document.querySelectorAll(".cadre[style='display: block;']"),
+  DisplayCard: (card) =>
+    pageObject.cadre().insertAdjacentHTML("beforeend", card),
   addCard: (cardContent) =>
     pageObject.sectionFiltre().insertAdjacentHTML("beforeend", cardContent),
 
@@ -22,7 +24,6 @@ const pageObject = {
   ingredientChoixAppareils: () => document.getElementById("list_Appareil"),
   tagElementsUstensile: () => document.querySelectorAll(".tagUstensile"),
   ingredientChoixUstensile: () => document.getElementById("list_Ustensiles"),
-  DisplaySection:(Section)=>sectionOption.insertAdjacentHTML("beforeend",  Section),
-
-
+  DisplaySection: (Section) =>
+    sectionOption.insertAdjacentHTML("beforeend", Section),
 };

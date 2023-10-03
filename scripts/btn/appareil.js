@@ -92,3 +92,10 @@ function updateAppareilList() {
     "data-tag-value-Appareils"
   );
 }
+
+// Empêche le comportement par défaut du bouton
+const BtnsearchApparei= document.getElementById( "searchApparei");
+BtnsearchApparei.addEventListener("click", (e) => {
+  e.preventDefault();
+});
+

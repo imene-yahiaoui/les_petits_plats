@@ -88,3 +88,10 @@ function updateIngredientsList() {
     "data-value-Ingredients"
   );
 }
+
+
+ // Empêche le comportement par défaut du bouton
+const BtnsearchIngredient= document.getElementById("searchIngredient");
+BtnsearchIngredient.addEventListener("click", (e) => {
+  e.preventDefault();
+});
