@@ -1,13 +1,24 @@
 /**
- * @param[data]
- * @return[recipe card]
+ * @param {data}
+ * @return {recipe card}
  *
  */
 
 const originalCadres = [];
 const listOfGlobalRecipe = [];
 let cadreCount = 0;
-//recuper les card
+processRecipes();
+/**
+ * empêche le comportement par défaut du bouton lorsqu'il est cliqué
+ */
+BtnSearche.addEventListener("click", (e) => {
+  e.preventDefault();
+});
+
+/**
+ * recuper les card
+ */
+
 async function processRecipes() {
   const dataArray = await fetchData();
   dataArray.forEach((data) => {
@@ -19,14 +30,17 @@ async function processRecipes() {
   });
   numbreOfCard();
 }
-
+/**
+ * affiche le numbre des recettes
+ */
 function numbreOfCard() {
   pageObject.addCard(rendreCardCount(cadreCount));
 }
-processRecipes();
-fetchData();
 
-//metre a jour le numero de cardes
+/**
+ * metre a jour le numbre des recettes
+ */
+
 function updateNumberOfCards() {
   const numberOfVisibleCadres = pageObject.visibleCadres().length;
 
@@ -35,33 +49,37 @@ function updateNumberOfCards() {
   );
 }
 
-BtnSearche.addEventListener("click", (e) => {
-  e.preventDefault();
-});
-//functin dinput
+/**
+ * Écoute les clics sur l'élément input
+ */
+
 searchValue.addEventListener("input", SearchWithInput);
 function SearchWithInput() {
   performSearch(elementValues);
 }
-
+/**
+ * aplique le filtrage dinput et tags
+ */
 function performSearch(tagValues) {
   const tagValue = tagValues.map((value) => value.toLowerCase());
   const valeurDeRecherche = searchValue.value.toLowerCase();
   const existingNoMatchMessage = document.getElementById("NoMatchview");
 
-  // Supprimer un message existant s'il y en a
   if (existingNoMatchMessage) {
     existingNoMatchMessage.remove();
   }
   const matchCadres = [];
 
   filtre(valeurDeRecherche, matchCadres, listOfGlobalRecipe, tagValue);
-  // Effacer le contenu actuel de l'affichage des cadres
   pageObject.cadre().innerHTML = "";
-  ///affiche les card
+  /**
+   *Affiche les cartes après le filtrage.
+   */
   MatchCadre(valeurDeRecherche, matchCadres);
   filterAndDisplayCadres(valeurDeRecherche);
-  //affiche msg derr
+  /**
+   * L'affichage  s'il n'y a pas de cartes correspondant à la recherche.
+   */
   NoMatchCardes(valeurDeRecherche, matchCadres);
 
   updateNumberOfCards();
@@ -69,7 +87,10 @@ function performSearch(tagValues) {
   updateAppareilList();
   updateUstensileList();
 }
-// L'affichage s'il n'y a pas de carte correspondant à la recherche
+/**
+ * L'affichage  s'il n'y a pas de cartes correspondant à la recherche.
+ */
+
 function NoMatchCardes(valeurDeRecherche, matchCadres) {
   if (valeurDeRecherche.length > 2 && matchCadres.length === 0) {
     main.insertAdjacentHTML("afterend", NoMatchCard(valeurDeRecherche));

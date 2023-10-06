@@ -1,8 +1,7 @@
 /**
- * ingredientsbtn
- * @param[data ]
- * @return[cadres]
- *@return[cader count]
+ * crée les cadres de recettes
+ * @param {data}
+ * @return {cadres ,cader count}
  **/
 
 function card(data) {
@@ -16,16 +15,16 @@ function card(data) {
     time,
     id,
     appliance,
-    ustensils
-     
+    ustensils,
   } = data;
   const picture = `./assets/images/${image}`;
-
-  // Créer une liste d'ingrédients en parcourant le tableau d'ingrédients
+  /**
+   *Créer une liste d'ingrédients en parcourant le tableau d'ingrédients
+   */
   const ingredientsList = ingredients
-  ? ingredients
-      .map(
-        (ingr) => `
+    ? ingredients
+        .map(
+          (ingr) => `
    <li>
      <p class="ingredientElement">${ingr.ingredient}</p>
      ${
@@ -37,18 +36,24 @@ function card(data) {
      }
    </li>
   `
-    )
-    .join(""):"";
+        )
+        .join("")
+    : "";
 
   const maxLength = 180;
+  /**
+   * Tronquer la description si elle dépasse maxLength
+   */
 
-  // Tronquer la description si elle dépasse maxLength
   const truncatedDescription =
     description.length > maxLength
       ? `${description.substring(0, maxLength)}...` // Tronquer et ajouter des points de suspension
       : description;
 
-  // Récupérer les ustensiles dans un tableau
+  /**
+   * Récupérer les ustensiles dans un tableau
+   */
+
   const ustensilsList = [];
   ustensils.forEach((ustensil) => {
     ustensilsList.push(ustensil);
@@ -89,12 +94,17 @@ function card(data) {
   return cadre;
 }
 
+/**
+ * affiche le numbre de reccetes
+ */
 function rendreCardCount(nbCadre) {
   return `
     <p class="font-Anton  text-[21px] font-normal" id="cardesNumber"> ${nbCadre}  recettes</p>
     `;
 }
-
+/**
+ * crée la section des btn de filtre
+ */
 function createFilterSection(
   left,
   label,
@@ -123,15 +133,19 @@ function createFilterSection(
     </div>
   `;
 }
+/**
+ * recuprer les elemntent des list
+ */
 
-///recuprer les elemntent des list
 function ListItem(element, item) {
   return ` <li
           class="capitalize ${element}   text-sm font-Manrope font-normal hover:bg-yellow-500 mb-2 py-4 pl-[18px] " >
             <button class="ListIngredientsBtn ">  ${item} </button>
           </li>`;
 }
-
+/**
+ * cree le tag
+ */
 function Tag(tag, closeTag, dataValue, valueBtn) {
   return `<li
   class="${tag}  text-sm font-Manrope font-normal bg-yellow-500 mb-2 py-4   text-transform: capitalize flex row px-4   rounded-md mr-10" >
@@ -140,7 +154,12 @@ function Tag(tag, closeTag, dataValue, valueBtn) {
   </li>`;
 }
 
+/**
+ * Crée le message d'erreur lorsque aucune recette ne correspond à la recherche.
+ * @param {string} value - La valeur de recherche qui n'a donné aucune correspondance.
+ * @returns {string} Le message d'erreur formaté.
+ */
 function NoMatchCard(value) {
-  return`<p id="NoMatchview" class="font-anton text-lg font-normal w-full py-10  bg-gray-200 pl-[60px]">  Aucune recette ne contient ‘${value} ’ vous pouvez chercher «
-  tarte aux pommes », « poisson », etc. </p>`
+  return `<p id="NoMatchview" class="font-anton text-lg font-normal w-full py-10  bg-gray-200 pl-[60px]">  Aucune recette ne contient ‘${value} ’ vous pouvez chercher «
+  tarte aux pommes », « poisson », etc. </p>`;
 }

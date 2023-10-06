@@ -1,3 +1,7 @@
+/**
+ * crée le btn ingredient
+ */
+
 const ingredientsFilterSection = createFilterSection(
   "left-[19px]",
   "Ingrédients",
@@ -7,7 +11,9 @@ const ingredientsFilterSection = createFilterSection(
   "list_ingredient"
 );
 pageObject.DisplaySection(ingredientsFilterSection);
-
+/**
+ * affiche la list  des ingredients
+ */
 waitForElements(
   ".ingredientElement",
   "list_ingredient",
@@ -17,9 +23,17 @@ waitForElements(
   "closeTagIngredients",
   "data-value-Ingredients"
 );
-
+/**
+ * @param {input search }
+ * @return {List Ingredients}
+ */
 searcheInbtn("ingredientSearch", ".Ingredients");
 
+/**
+ * @param {btn }
+ * @return { value btn ingredient}
+ * crée le tags
+ */
 initializeButtons(
   ".Ingredients",
   "tagIngredients",
@@ -27,6 +41,10 @@ initializeButtons(
   "data-value-Ingredients"
 );
 
+/**
+ * @param {tagElement}
+ * ferme le tag
+ */
 function closeBtnTagIngredient() {
   pageObject.tagElements().forEach((tagElement) => {
     const btnCloseTag = tagElement.querySelector(".closeTagIngredients");
@@ -35,8 +53,9 @@ function closeBtnTagIngredient() {
     btnCloseTag.addEventListener("click", function () {
       console.log("Tag to remove:", tagValueToRemove);
       tagElement.remove();
-
-      // Retirez la valeur du tag du tableau elementValues
+      /**
+       * Retire la valeur du tag du tableau elementValues
+       */
       elementValues = elementValues.filter(
         (value) => value !== tagValueToRemove
       );
@@ -52,7 +71,7 @@ function closeBtnTagIngredient() {
 }
 
 /**
- * @return[Ingedients List]
+ * @return {Ingedients List}
  */
 function updateIngredientsList() {
   const elements = [];
@@ -66,21 +85,28 @@ function updateIngredientsList() {
   elements.forEach((element) => {
     uniqueIngredients.add(element.textContent);
   });
-
-  // Create a new list without duplicates from the set
+  /**
+   *Crée une nouvelle liste sans doublons à partir de l'ensemble
+   */
   const uniqueIngredientElements = Array.from(uniqueIngredients);
+  /**
+   *Efface la liste existante des ingrédients
+   */
 
-  // Clear the existing list of ingredients
   pageObject.ingredientChoix().innerHTML = "";
+  /**
+   *Affiche la nouvelle liste sans doublons
+   */
 
-  // Display the new list without duplicates
   uniqueIngredientElements.forEach((element) => {
     pageObject
       .ingredientChoix()
       .insertAdjacentHTML("beforeEnd", ListItem("Ingredients", element));
   });
 
-  // Initialize buttons or perform any other necessary actions
+  /**
+   * Initialise les boutons ou effectue toute autre action nécessaire
+   */
   initializeButtons(
     ".Ingredients",
     "tagIngredients",
@@ -89,9 +115,10 @@ function updateIngredientsList() {
   );
 }
 
-
- // Empêche le comportement par défaut du bouton
-const BtnsearchIngredient= document.getElementById("searchIngredient");
+/**
+ * empêche le comportement par défaut du bouton lorsqu'il est cliqué
+ */
+const BtnsearchIngredient = document.getElementById("searchIngredient");
 BtnsearchIngredient.addEventListener("click", (e) => {
   e.preventDefault();
 });

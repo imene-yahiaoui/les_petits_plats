@@ -1,3 +1,6 @@
+/**
+ * cree le btn  Appareil
+ */
 const AppareilFilterSection = createFilterSection(
   "left-[296px]",
   "Appareils",
@@ -8,6 +11,9 @@ const AppareilFilterSection = createFilterSection(
 );
 pageObject.DisplaySection(AppareilFilterSection);
 
+/**
+ * affiche la list  des Appareils
+ */
 waitForElements(
   ".appareil",
   "list_Appareil",
@@ -17,15 +23,26 @@ waitForElements(
   "closeAppareils",
   "data-tag-value-Appareils"
 );
-
+/**
+ * @param {input search }
+ * @return {List Appareil}
+ */
 searcheInbtn("AppareilSearch", ".Appareils");
+/**
+ * @param {btn }
+ * @return {value btn appareil}
+ * crée le tags
+ */
 initializeButtons(
   ".Appareils",
   "tagAppareils",
   "closeAppareils",
   "data-tag-value-Appareils"
 );
-
+/**
+ * @param {tagElement}
+ * ferme le tag
+ */
 function closeBtnTagAppareil() {
   pageObject.tagElementsAppareils().forEach((tagElement) => {
     const btnCloseTag = tagElement.querySelector(".closeAppareils");
@@ -37,14 +54,16 @@ function closeBtnTagAppareil() {
       console.log("je entend le click");
       console.log("Tag to remove:", tagValueToRemove);
       tagElement.remove();
-
-      // Retirez la valeur du tag du tableau elementValues
+      /**
+       * Retire la valeur du tag du tableau elementValues
+       */
       elementValues = elementValues.filter(
         (value) => value !== tagValueToRemove
       );
       updateAppareilList();
-
-      //  Vérifie s'il ne reste plus aucun tag, puis affiche toutes les recettes
+      /**
+       * Vérifie s'il ne reste plus aucun tag, puis affiche toutes les recettes
+       */
       if (elementValues.length === 0) {
         searchWithTags([]);
       } else {
@@ -56,7 +75,7 @@ function closeBtnTagAppareil() {
 }
 
 /**
- * @return[Ingedients List]
+ * @return {Appareils List}
  */
 function updateAppareilList() {
   const elements = [];
@@ -71,20 +90,27 @@ function updateAppareilList() {
     uniqueIngredients.add(element.textContent);
   });
 
-  // Create a new list without duplicates from the set
-  const uniqueIngredientElements = Array.from(uniqueIngredients);
+  /**
+   *Crée une nouvelle liste sans doublons à partir de l'ensemble
+   */ const uniqueIngredientElements = Array.from(uniqueIngredients);
 
-  // Clear the existing list of ingredients
+  /**
+   *Efface la liste existante des ingrédients
+   */
   pageObject.ingredientChoixAppareils().innerHTML = "";
 
-  // Display the new list without duplicates
+  /**
+   *Affiche la nouvelle liste sans doublons
+   */
   uniqueIngredientElements.forEach((element) => {
     pageObject
       .ingredientChoixAppareils()
       .insertAdjacentHTML("beforeEnd", ListItem("Appareils", element));
   });
 
-  // Initialize buttons or perform any other necessary actions
+  /**
+   * Initialise les boutons ou effectue toute autre action nécessaire
+   */
   initializeButtons(
     ".Appareils",
     "tagAppareils",
@@ -93,9 +119,10 @@ function updateAppareilList() {
   );
 }
 
-// Empêche le comportement par défaut du bouton
-const BtnsearchApparei= document.getElementById( "searchApparei");
+/**
+ * empêche le comportement par défaut du bouton lorsqu'il est cliqué
+ */
+const BtnsearchApparei = document.getElementById("searchApparei");
 BtnsearchApparei.addEventListener("click", (e) => {
   e.preventDefault();
 });
-
