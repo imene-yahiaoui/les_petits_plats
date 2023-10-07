@@ -1,5 +1,5 @@
 /**
- * afficher la list  dans les btn
+ * afficher la list  dans les btn de filtrage
  */
 function waitForElements(
   selector,
@@ -35,9 +35,14 @@ function waitForElements(
     elements.forEach((element) => {
       uniqueElements.add(element.textContent.toLowerCase());
     });
-    // Créez une nouvelle liste sans doublons à partir de l'ensemble
+    /**
+     * Créez une nouvelle liste sans doublons à partir de l'ensemble
+     */
+
     const uniqueElementList = Array.from(uniqueElements);
-    // Affichez la nouvelle liste sans doublons
+    /**
+     *Affichez la nouvelle liste sans doublons
+     */
     uniqueElementList.forEach((element) => {
       const list = document.getElementById(listId);
       list.insertAdjacentHTML("beforeEnd", ListItem(typeElement, element));
@@ -47,14 +52,16 @@ function waitForElements(
 }
 
 /**
- * @param[input search ]
- * * @return[List Ingredients]
+ * @param {input search }
+ * @return {List des élementes }
  */
 function searcheInbtn(ElementId, Element) {
   const valueElement = document.getElementById(ElementId);
   valueElement.addEventListener("input", function () {
-    const valeur = valueElement.value.toLowerCase();
-    // Parcours les valueElements  pour trouver correspondances
+    const valeur = valueElement.value.toLowerCase().replace(/<|>/g, "!");
+    /**
+     * Parcours les valueElements  pour trouver correspondances
+     */
     const valueElementList = document.querySelectorAll(Element);
     valueElementList.forEach((Item) => {
       const ElementName = Item.textContent.toLowerCase();
@@ -75,8 +82,9 @@ function searcheInbtn(ElementId, Element) {
 }
 
 /**
- * param[btn ]
- * return[ value btn ingredient] //cree le tags
+ * @param {btn}
+ * @return {value btn ingredient}
+ * crée le tags
  */
 
 let elementValues = [];
@@ -86,6 +94,8 @@ function initializeButtons(ElementTag, tag, closeTag, dataValue) {
     button.addEventListener("click", function () {
       const valueBtn = button.textContent.trim();
       elementValues.push(valueBtn);
+      console.log("Tags :", elementValues);
+
       tagSection.insertAdjacentHTML(
         "beforeEnd",
         Tag(tag, closeTag, dataValue, valueBtn)
@@ -99,6 +109,10 @@ function initializeButtons(ElementTag, tag, closeTag, dataValue) {
     });
   });
 }
+/**
+ * @param {tagValues} - Les balises à utiliser pour la recherche.
+ * active la recherche avec les tags
+ */
 function searchWithTags(tagValues) {
   performSearch(tagValues);
 }

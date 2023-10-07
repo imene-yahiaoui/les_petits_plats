@@ -1,3 +1,12 @@
+/**
+ * Effectue le filtrage des recettes en fonction de la valeur de recherche, des tags, et des éléments sélectionnés.
+ * @param {string} valeurDeRecherche - La valeur de recherche de l'utilisateur.
+ * @param {Array} matchCadres - Tableau pour stocker les recettes correspondantes.
+ * @param {Array} listOfGlobalRecipe - Liste complète de recettes.
+ * @param {string} tagValue - La valeur de tags sélectionné.
+ * @param {Array} elementValues - Tableau contenant les tags sélectionnés.
+ */
+
 function filtre(
   valeurDeRecherche,
   matchCadres,
@@ -5,7 +14,6 @@ function filtre(
   tagValue,
   elementValues
 ) {
- 
   for (let i = 0; i < listOfGlobalRecipe.length; i++) {
     const cadre = listOfGlobalRecipe[i];
     const titre = cadre.name.toLowerCase();
@@ -44,12 +52,10 @@ function filtre(
     );
 
     if (valeurDeRecherche.length > 2) {
-      //si ya pas tag
       if (tagValue.length === 0) {
         if (containsValue) {
           matchCadres.push(cadre);
         }
-        //si il ya tag
       } else {
         if (containsValue && allTagsInRecipe) {
           matchCadres.push(cadre);
@@ -65,7 +71,10 @@ function filtre(
     }
   }
 }
-//si la valure de rechreche moins de 2 caractères
+/**
+ * afficher les cadres lorsque la valeur de recherche > 2 caractères et les tags ne sont pas  sélectionnés.
+ * @param {string} valeurDeRecherche - La valeur de recherche de l'utilisateur.
+ */
 function filterAndDisplayCadres(valeurDeRecherche) {
   if (valeurDeRecherche.length <= 2 && elementValues.length === 0) {
     // Effacez le contenu actuel de l'affichage des cadres
@@ -78,7 +87,12 @@ function filterAndDisplayCadres(valeurDeRecherche) {
   }
 }
 
-// Filtrer les cadres en fonction de la valeur de recherche si elle est plus de 2  caractères
+/**
+ * Afficher les cadres correspondants à la recherche.
+ * @param {string} valeurDeRecherche - La valeur de recherche de l'utilisateur.
+ * @param {Array} matchCadres - Tableau contenant les recettes correspondantes.
+ */
+
 function MatchCadre(valeurDeRecherche, matchCadres) {
   if (valeurDeRecherche.length > 2 || elementValues.length > 0) {
     const uniqueIds = new Set();
@@ -93,7 +107,6 @@ function MatchCadre(valeurDeRecherche, matchCadres) {
       }
     }
 
-    // Effacez le contenu actuel de l'affichage des cadres
     pageObject.cadre().innerHTML = "";
 
     for (let i = 0; i < filteredCadres.length; i++) {
@@ -102,5 +115,3 @@ function MatchCadre(valeurDeRecherche, matchCadres) {
     }
   }
 }
-
-
