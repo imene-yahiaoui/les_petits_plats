@@ -62,7 +62,10 @@ function SearchWithInput() {
  */
 function performSearch(tagValues) {
   const tagValue = tagValues.map((value) => value.toLowerCase());
-  const valeurDeRecherche = searchValue.value.toLowerCase();
+  /**
+   * Supprime les balises HTML
+   */
+  const valeurDeRecherche = searchValue.value.toLowerCase().replace(/<|>/g, '!');
   const existingNoMatchMessage = document.getElementById("NoMatchview");
 
   if (existingNoMatchMessage) {

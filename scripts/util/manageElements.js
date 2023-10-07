@@ -58,7 +58,7 @@ function waitForElements(
 function searcheInbtn(ElementId, Element) {
   const valueElement = document.getElementById(ElementId);
   valueElement.addEventListener("input", function () {
-    const valeur = valueElement.value.toLowerCase();
+    const valeur = valueElement.value.toLowerCase().replace(/<|>/g, '!');;
     /**
      * Parcours les valueElements  pour trouver correspondances
      */
